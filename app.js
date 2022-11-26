@@ -8,12 +8,14 @@ const handlebars = require('express-handlebars')
 const homeRouter = require('./home/homeRouter');
 const indexRouter = require('./routes/index');
 const productRouter = require('./products/productRouter');
+const detailRouter = require('./products/detailRouter');
 
 const usersRouter = require('./users/userRouter');
 const loginRouter = require('./routes/login');
 const feedbackRouter = require('./routes/feedback');
 const recycleRouter = require('./recycles/recycleRouter');
 const charityRouter = require('./charities/charityRouter');
+
     
 
 const app = express();
@@ -41,11 +43,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)
 })
-
+global.userLogined= true
 
 
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);
+app.use('/product', detailRouter);
 app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
@@ -71,3 +74,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

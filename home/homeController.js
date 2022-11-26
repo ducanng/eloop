@@ -6,5 +6,7 @@ exports.getPartner = async (req,res,next) =>{
     partnerList.forEach(element => {
        console.log(element.name);  
     });
-    res.render('users/home', {partnerList : partnerList})
+ 
+    console.log(global.userLogined);
+    res.render('users/home')
 }

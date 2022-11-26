@@ -3,7 +3,7 @@ const { sequelize,DataTypes } = require('../config/db');
 
 const user = sequelize.define('user', {
   // Model attributes are defined here
-  username: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
