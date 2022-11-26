@@ -4,7 +4,7 @@
 window.onload = function() {
   let userLogined = sessionStorage.getItem("isLogin")
   window.console.log(`heder ${userLogined}`)
-  if (userLogined === false){
+  if (userLogined === "false"){
     // Not login
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0).textContent = 'Đăng nhập'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'none'
@@ -12,7 +12,9 @@ window.onload = function() {
   }
   else{
     // logined
-    document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0).textContent = 'Thông tin người dùng'
+    let i = document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0)
+    i.textContent = 'Thông tin người dùng'
+    i.setAttribute("href","/home")
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'show'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(2).style.display = 'show'
 
