@@ -8,8 +8,29 @@
   </ul>
 </div>
 
-<div class="wrapper">
+  <script>
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 285,
+        'height': 40,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+  </script>
+
+<div class="wrapper">  
   <div class="rec-prism">
+  
     <div class="face face-top">
       <div class="content">
         <h2>Theo dõi</h2>
@@ -32,7 +53,7 @@
         <form name="form0" action="/user/login" method="post">
           <form onsubmit="event.preventDefault()">
             <div class="field-wrapper">
-              <input type="text" name="username" placeholder="username">
+              <input type="text" name="usermail" placeholder="useremail">
               <label>Tài khoản</label>
             </div>
             <div class="field-wrapper">
@@ -123,10 +144,8 @@
     </div>
   </div>
 </div>
-
+<div id="my-signin2" style="margin-left: 615px;"></div>
 <script>
-  function Login() {
-    var email = document.getElementById("useremail").value;
+  
 
-  }
 </script>
