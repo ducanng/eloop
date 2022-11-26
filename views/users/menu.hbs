@@ -1,0 +1,205 @@
+{{!-- <script src="/products/script.js">
+
+</script> --}}
+
+ <script type="text/javascript">
+    function queryParameter(){
+      // http://localhost:3000/menu/explore?store=id&comboType=combo&type=type&price=price
+      const baseUrl = "http://localhost:3000/menu/explore?"
+      var storeParam = "store="
+      let comboTypeParam = "comboType="
+      let priceParam = "price="
+      let typeParam = "type"
+      //check store list
+      let storeList = document.getElementById("flush-collapseOne").getElementsByClassName("form-check-input")
+      for (let i = 0; i < storeList.length; i++) {
+        if (storeList[i].checked){
+          storeParam += (storeList[i].id).toString()
+        }
+      }
+      //check combotype list
+      let comboTypeList = document.getElementById("flush-collapseTwo").getElementsByClassName("form-check-input")
+      for (let i = 0; i < comboTypeList.length; i++) {
+        if(comboTypeList[i].checked){
+          comboTypeParam += (comboTypeList[i].id).toString()
+        }
+      }
+      //check price list
+      let priceList = document.getElementById("flush-collapseThree").getElementsByClassName("form-check-input")
+      for (let i = 0; i < priceList.length; i++) {
+        if (priceList[i].checked){
+          priceParam +=  (priceList[i].id).toString()
+        }
+      }
+      //check type list
+      let typeList = document.getElementById("flush-collapseFour").getElementsByClassName("form-check-input")
+      for (let i = 0; i < typeList.length; i++) {
+        if (typeList[i].checked){
+          typeParam = "type=" +  (typeList[i].id).toString()
+        }
+      }
+
+      window.location= `${baseUrl}${storeParam}&${comboTypeParam}&${priceParam}&${typeParam}`
+    }
+
+ </script> 
+ 
+<div id="menu" class="container">
+  {{!-- option-list : Start --}}
+  <div class="col-3 option-list">
+    <div class="accordion accordion-flush" >
+      {{!-- option-store : Start --}}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne" >
+            Cửa hàng
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" >
+          <div class="accordion-body store-list">
+            {{#each storeList}}
+            <div class="form-check" >
+              <input  class="form-check-input" type="checkbox" name="store" id="{{id}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{id}}" >
+                {{name}}
+              </label>
+            </div>
+            {{/each}}
+            {{!-- <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+              <label class="form-check-label" for="flexRadioDefault2">
+                Familly Mart
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+              <label class="form-check-label" for="flexRadioDefault3">
+                CS 25 
+              </label>
+            </div> --}}
+          </div>
+        </div>
+      </div>
+      {{!-- option-store : End --}}
+
+      {{!-- option-combo : Start --}}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
+            Kiểu combo
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" >
+          <div class="accordion-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="comboType" id="both">
+              <label class="form-check-label" for="both">
+                Combo và đơn
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="comboType" id="single">
+              <label class="form-check-label" for="single">
+                Đơn
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="comboType" id="combo">
+              <label class="form-check-label" for="combo">
+                Combo
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- option-combo : End --}}
+
+      {{!-- option-price : Start --}}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="true" aria-controls="flush-collapseThree">
+            Giá
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" >
+          <div class="accordion-body store-list">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="price" id="1" >
+              <label class="form-check-label" for="1">
+                0 - 10.000
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="price" id="2">
+              <label class="form-check-label" for="2">
+                10.000 - 20.000
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="price" id="3">
+              <label class="form-check-label" for="3">
+                20.000 - 30.000 
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- option-price : End --}}
+
+      {{!-- option-type : Start --}}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="true" aria-controls="flush-collapseFour">
+            Loại sản phẩm
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" >
+          <div class="accordion-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="type" id="both">
+              <label class="form-check-label" for="both">
+                Thức ăn và thức uống
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="type" id="food">
+              <label class="form-check-label" for="food">
+                Thức ăn
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="type" id="drink">
+              <label class="form-check-label" for="drink">
+                Thức uống
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- option-type : End --}}
+
+    </div>
+  </div>
+  {{!-- product-list : Start --}}
+  <div class="col-7" id="product">
+    {{#each productList}}
+    <div class="card" style="width: 18rem;">
+      <img src="/images/HDA TEAM.png" alt="Food image">
+      {{!-- <a href="/menu/sss">sss</a> --}}
+      <div class="product-body">
+        <a href="detail/{{id}}" class="product-title">
+          {{name}}
+        </a>
+        <p class="product-price">
+          {{price}}đ
+        </p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{!-- product-list : End --}}
+
+  {{!-- sort-list : Start --}}
+  <div class="col-2 sort-list"></div>
+  {{!-- sort-list : End --}}
+</div>
