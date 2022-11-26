@@ -31,9 +31,10 @@
           priceParam +=  (priceList[i].id).toString()
         }
       } 
-
+      
       window.location= `${baseUrl}${partnerParam}&${catalogueParam}&${priceParam}`
     }
+ 
 
  </script> 
  
@@ -132,14 +133,16 @@
         <p class="product-price">
           {{price}}đ
         </p>
-        <button class="learn-more">
-          <a href="#">
-              <span class="circle" aria-hidden="true">
-                  <span class="icon arrow"></span>
-              </span>
-              <span class="button-text">Mua</span>
-          </a>
-        </button>
+        <form action="/order/{{id}}" method="post">
+          <button class="learn-more">
+            <a href="#">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mua</span>
+            </a>
+          </button>
+        </form>
       </div>
     </div>
     {{/each}}

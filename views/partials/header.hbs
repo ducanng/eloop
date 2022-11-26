@@ -4,7 +4,7 @@
 window.onload = function() {
   let userLogined = sessionStorage.getItem("isLogin")
   window.console.log(`heder ${userLogined}`)
-  if (userLogined === false){
+  if (userLogined === "false"){
     // Not login
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0).textContent = 'Đăng nhập'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'none'
@@ -12,7 +12,9 @@ window.onload = function() {
   }
   else{
     // logined
-    document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0).textContent = 'Thông tin người dùng'
+    let i = document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0)
+    i.textContent = 'Thông tin người dùng'
+    i.setAttribute("href","/home")
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'show'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(2).style.display = 'show'
 
@@ -27,7 +29,7 @@ window.onload = function() {
 
 </script> 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="/home">
     <img class="navbar-logo" src="/images/logo.png" alt="" height="40px" width="100px">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +63,7 @@ window.onload = function() {
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="/login" >Đăng nhập</a>
                 <a class="dropdown-item"  href="/order">Giỏ hàng</a>
-                <a class="dropdown-item"  href="#" onclick="logout()">Đăng xuất</a>
+                <a class="dropdown-item"  href="/login" onclick="logout()">Đăng xuất</a>
               </div>           
       </div>  
             

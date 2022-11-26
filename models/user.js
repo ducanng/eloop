@@ -48,6 +48,19 @@ async function findUser(account){
   }
   return userInstance
 }
+async function findUserId(account){
+  const userInstance = await sequelize.query(`SELECT id FROM users WHERE account = "${account}"`, 
+  { type: sequelize.QueryTypes.SELECT});
+
+  if (userInstance[0] === null){
+    console.log('Not found!')
+    return null
+  }else{
+    console.log('User is found!')
+  }
+  console.log(userInstance[0].id); 
+  return userInstance[0].id; 
+}
 
 async function addUser(name, account, password){
   const existUser = await findUser(account)
@@ -91,4 +104,4 @@ async function updateUser(name, account, password){
 // addUser('hu','test','123')
 // updateUser('hu','hh','12345')
 
-module.exports ={user,findUser,addUser,removeUser,updateUser}
+module.exports ={user,findUser,addUser,removeUser,updateUser,findUserId}

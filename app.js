@@ -10,11 +10,14 @@ const indexRouter = require('./routes/index');
 const productRouter = require('./products/productRouter');
 const detailRouter = require('./products/detailRouter');
 
+
 const usersRouter = require('./users/userRouter');
 const loginRouter = require('./routes/login');
+const infoRouter = require('./routes/info');
 const feedbackRouter = require('./routes/feedback');
 const recycleRouter = require('./recycles/recycleRouter');
 const charityRouter = require('./charities/charityRouter');
+const orderRouter = require('./orders/orderRouter');
 
     
 
@@ -49,10 +52,12 @@ global.userLogined= true
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);
 app.use('/product', detailRouter);
+app.use('/order', orderRouter);
 app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/login', loginRouter);
+app.use('/info', infoRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
 
