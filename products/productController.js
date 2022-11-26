@@ -1,7 +1,7 @@
 const {product,findProduct,addProduct,removeProduct,getProductList,findRelativeProduct} = require('../models/product')
 const {partner,findPartner,addPartner,removePartner,getPartnerList} = require('../models/partner')
 const {catalogue,findCatalogue,addCatalogue,removeCatalogue,getCatalogueList} = require('../models/catalogue')
-exports.getListProduct = async (req,res,next) =>{
+exports.getListProductQueryParam = async (req,res,next) =>{
     const partnerId = req.query.partner
     console.log(req.query.partner);
 
@@ -18,6 +18,22 @@ exports.getListProduct = async (req,res,next) =>{
     productList.forEach(element => {
        console.log(element.name);  
     });
+    res.render('users/menu', {productList : productList, partnerList : partnerList,catalogueList :catalogueList})
+}
+exports.getListProduct = async (req,res,next) =>{
+    const partnerId = ""
+    console.log(req.query.partner);
+
+    const catalogue = ""
+    console.log(req.query.catalogue);
+
+    const price = ""
+    console.log(req.query.price);
+    
+    const partnerList = await getPartnerList(partnerId);
+    const catalogueList = await getCatalogueList(catalogue);
+    const productList = await getProductList(partnerId,catalogue,price);
+    console.log(productList.length);
     res.render('users/menu', {productList : productList, partnerList : partnerList,catalogueList :catalogueList})
 }
 

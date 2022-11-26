@@ -56,5 +56,13 @@ async function removeCharity(account){
     console.log('charity is removed!')
   }
 }
-
-module.exports = {charity,findCharity,addCharity,removeCharity}
+async function getCharityList(){
+  const charityList = await charity.findAll()
+  if (charityList === null){
+    console.log('recycle are not exists')
+  }else{
+    console.log('recycle list is built!')
+  }
+  return charityList
+}
+module.exports = {charity,findCharity,addCharity,removeCharity,getCharityList}

@@ -93,8 +93,18 @@ async function updateProduct(id,productImageUrl, productName, price,description)
   }
 }
 
-async function getProductList(partnerId,catalogueId,price){
+async function getProductList(partnerId,catalogueName,price){
   let productList = null
+  
+  if(catalogueName !== ""){
+    const catalogue = await sequelize.query(`SELECT id FROM catalogues WHERE name = "${catalogueName}"`, 
+                                              { type: sequelize.QueryTypes.SELECT});
+    if(catalogue[0] === undefined){
+      return null
+    }   
+    catalogueId = catalogue[0].id;        
+  }
+                      
   // all
   if(partnerId === "" && catalogueId === "" && price === ""){
     productList = await product.findAll()
