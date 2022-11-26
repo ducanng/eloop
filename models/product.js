@@ -96,30 +96,38 @@ async function updateProduct(id,productImageUrl, productName, price,description)
 async function getProductList(partnerId,catalogueId,price){
   let productList = null
   // all
-  if(partnerId === undefined && catalogueId === undefined && price === undefined){
+  if(partnerId === "" && catalogueId === "" && price === ""){
     productList = await product.findAll()
+    console.log("case1");
   }
   // empty one atribute
-  else if(partnerId === undefined && catalogueId !== undefined && price !== undefined){
+  else if(partnerId === "" && catalogueId !== "" && price !== ""){
     productList = await product.findAll({where : {catalogueId: catalogueId,price : price}})
+    console.log("case2");
   }
-  else if(partnerId !== undefined && catalogueId !== undefined && price === undefined){
+  else if(partnerId !== "" && catalogueId !== "" && price === ""){
     productList = await product.findAll({where : {partnerId: partnerId,catalogueId : catalogueId}})
+    console.log("case3");
   }
-  else if(partnerId !== undefined && catalogueId === undefined && price !== undefined){
+  else if(partnerId !== "" && catalogueId === "" && price !== ""){
     productList = await product.findAll({where : {partnerId: partnerId,price :price}})
+    console.log("case4");
   }
   // empty two atribute
-  else if(partnerId === undefined && catalogueId === undefined && price !== undefined){
+  else if(partnerId === "" && catalogueId === "" && price !== ""){
     productList = await product.findAll({where : {price :price}})
+    console.log("case5");
   }
-  else if(partnerId === undefined && catalogueId !== undefined && price === undefined){
+  else if(partnerId === "" && catalogueId !== "" && price === ""){
     productList = await product.findAll({where : {catalogueId : catalogueId}})
+    console.log("case6");
   }
-  else if(partnerId !== undefined && catalogueId === undefined && price === undefined){
+  else if(partnerId !== "" && catalogueId === "" && price === ""){
     productList = await product.findAll({where : {partnerId: partnerId}})
+    console.log("case7");
   }
   else{
+    console.log("case8");
     productList = await product.findAll({where : {partnerId: partnerId,catalogueId : catalogueId,price :price}})
   }
   if (productList === null){
