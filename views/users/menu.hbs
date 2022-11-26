@@ -126,12 +126,20 @@
       <img src="{{productImageUrl}}" alt="{{productName}}">
       {{!-- <a href="/menu/sss">sss</a> --}}
       <div class="product-body">
-        <a href="detail/{{id}}" class="product-title">
+        <a href="product/detail/{{id}}" class="product-title">
           {{productName}}
         </a>
         <p class="product-price">
           {{price}}đ
         </p>
+        <button class="learn-more">
+          <a href="#">
+              <span class="circle" aria-hidden="true">
+                  <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Mua</span>
+          </a>
+        </button>
       </div>
     </div>
     {{/each}}

@@ -1,7 +1,8 @@
 const {user,findUser,addUser,updateUser} = require("../models/user.js")
 
 exports.getUserLogin = (req,res,next) => {
-    res.render('features/login')
+
+    res.render('users/home',{userLogined : global.userLogined})
 }
 
 exports.postUserCreate = (req,res,next) => {
@@ -11,7 +12,8 @@ exports.postUserCreate = (req,res,next) => {
         const userPassword = req.body.password
         const userPassword2 = req.body.password2
         addUser(userEmail,userPassword,userPassword2)
-        res.render('users/home')
+        
+        res.render('users/home',{userLogined : global.userLogined})
     }
     else{
         console.log('Failed')
@@ -23,10 +25,11 @@ exports.postUserCreate = (req,res,next) => {
 
 exports.postUserLogin = async (req,res,next) => {
     console.log(req.body);
-    const existUser = await findUser(req.body.username)
+    const existUser = await findUser(req.body.usermail)
     if(existUser !== null && existUser.password === req.body.password){
         console.log('Login success')
-        res.render('users/home')
+        global.userLogined = true
+        res.render('users/home',{userLogined : global.userLogined})
     } else {
         console.log('Wrong account or password')
         res.redirect('/user')
