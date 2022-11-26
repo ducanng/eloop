@@ -11,7 +11,7 @@ const admin = sequelize.define('admin', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  passwork: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false
   },

@@ -1,4 +1,5 @@
 const { sequelize,DataTypes } = require('../config/db');
+const { partner } = require('./partner');
 
 const product = sequelize.define('product', {
   // Model attributes are defined here
@@ -22,13 +23,6 @@ const product = sequelize.define('product', {
   // Other model options go here
 });
 
-// `sequelize.define` also returns the model
-
-const waterType = Object.freeze({
-  type_1 : "Nước Giải Khát",
-  type_2 : "Nước uống",
-  type_3 : "Thức uống"
-})
 
 console.log(product === sequelize.models.product); // true
 async function findProduct(id){
@@ -41,10 +35,29 @@ async function findProduct(id){
   return productInstance
 }
 
-async function addProduct(name, account, password){
+async function findRelativeProduct(id){
+  const sizeRelativeProduct = 4
+  const catalogue = await sequelize.query(`SELECT catalogueId FROM products WHERE id = ${id}`, 
+                                            { type: sequelize.QueryTypes.SELECT});
+  if(catalogue[0] === undefined){
+    return null
+  }                                      
+  const catalogueId = catalogue[0].catalogueId;
+
+  const listRelativeProduct = await sequelize.query(`SELECT * FROM products WHERE catalogueId = ${catalogueId} and id != ${id} LIMIT ${sizeRelativeProduct}`, 
+                                                    { type: sequelize.QueryTypes.SELECT });
+
+  if (listRelativeProduct === null){
+    console.log('listRelativeProduct Not found!')
+  }else{
+    console.log('listRelativeProduct is build!')
+  }
+  return listRelativeProduct
+}
+async function addProduct(productImageUrl, productName, price,description){
   const existProduct = await findProduct(account)
   if(existProduct === null){
-    const productInstance = product.create({name: name, account: account, password : password})
+    const productInstance = product.create({productImageUrl: productImageUrl, productName: productName, price: price, description : description})
     console.log('Product is added!')
   }
   else {
@@ -52,8 +65,8 @@ async function addProduct(name, account, password){
   }
 }
 
-async function removeProduct(account){
-  const productInstance = await findProduct(account)
+async function removeProduct(id){
+  const productInstance = await findProduct(id)
   if(productInstance === null){
     console.log('Product is not exist!')
   }
@@ -63,12 +76,12 @@ async function removeProduct(account){
   }
 }
 
-async function updateProduct(name, account, password){
+async function updateProduct(id,productImageUrl, productName, price,description){
   const productInstance = await product.update({
-    name: name, account: account, password : password},
+    productImageUrl: productImageUrl, productName: productName, price: price, description : description},
     {
       where : {
-        account: account
+        id: id
     }
   })
   if(productInstance === null){
@@ -80,41 +93,37 @@ async function updateProduct(name, account, password){
   }
 }
 
-async function getProductList(storeId,catalogueId,price){
-  const type = "Thức uống"
-  if(type == typeof(waterType)){
-
-    console.log("this true");
-    console.log(typeof(waterType));
-    
+async function getProductList(partnerId,catalogueId,price){
+  let productList = null
+  // all
+  if(partnerId === undefined && catalogueId === undefined && price === undefined){
+    productList = await product.findAll()
+  }
+  // empty one atribute
+  else if(partnerId === undefined && catalogueId !== undefined && price !== undefined){
+    productList = await product.findAll({where : {catalogueId: catalogueId,price : price}})
+  }
+  else if(partnerId !== undefined && catalogueId !== undefined && price === undefined){
+    productList = await product.findAll({where : {partnerId: partnerId,catalogueId : catalogueId}})
+  }
+  else if(partnerId !== undefined && catalogueId === undefined && price !== undefined){
+    productList = await product.findAll({where : {partnerId: partnerId,price :price}})
+  }
+  // empty two atribute
+  else if(partnerId === undefined && catalogueId === undefined && price !== undefined){
+    productList = await product.findAll({where : {price :price}})
+  }
+  else if(partnerId === undefined && catalogueId !== undefined && price === undefined){
+    productList = await product.findAll({where : {catalogueId : catalogueId}})
+  }
+  else if(partnerId !== undefined && catalogueId === undefined && price === undefined){
+    productList = await product.findAll({where : {partnerId: partnerId}})
   }
   else{
-    console.log("this false");
-    console.log(waterType);
+    productList = await product.findAll({where : {partnerId: partnerId,catalogueId : catalogueId,price :price}})
   }
-  // const productList = null
-  // storeId = (storeId === undefined) ? 1 : storeId
-  // catalogueId = (catalogueId === undefined) ? "all" : catalogueId
-  // price = (price === undefined) ? 10000 : price
-    
-  // if(storeId === undefined){
-  //   productList = await product.findAll()
-  // }
-  // if(storeId !== undefined && catalogueId === undefined && ){
-
-  // }
-  // storeId = (storeId === undefined) ? 1 : storeId
-  // productList = await product.findAll({where : {storeId: storeId}})
-  // if (productList === null){
-  //   console.log('Store id is not exists')
-  // }else{
-  //   console.log('List Product is built!')
-  // }
-  // return productList
-  storeId = (storeId === undefined) ? 1 : storeId
-  const productList = await product.findAll({where : {storeId: storeId}})
   if (productList === null){
-    console.log('Store id is not exists')
+    console.log('list empty')
   }else{
     console.log('List Product is built!')
   }
@@ -126,5 +135,6 @@ module.exports = {
   findProduct,
   addProduct,
   removeProduct,
-  getProductList
+  getProductList,
+  findRelativeProduct
 }

@@ -4,24 +4,24 @@
 
  <script type="text/javascript">
     function queryParameter(){
-      // http://localhost:3000/menu/explore?store=id&comboType=combo&type=type&price=price
+      // http://localhost:3000/menu/explore?partner=&catalogue=&price=
       const baseUrl = "http://localhost:3000/menu/explore?"
-      var storeParam = "store="
-      let comboTypeParam = "comboType="
+      var partnerParam = "partner="
+      let catalogueParam = "catalogue="
       let priceParam = "price="
-      let typeParam = "type"
-      //check store list
-      let storeList = document.getElementById("flush-collapseOne").getElementsByClassName("form-check-input")
-      for (let i = 0; i < storeList.length; i++) {
-        if (storeList[i].checked){
-          storeParam += (storeList[i].id).toString()
+  
+      //check partner list
+      let partnerList = document.getElementById("flush-collapseOne").getElementsByClassName("form-check-input")
+      for (let i = 0; i < partnerList.length; i++) {
+        if (partnerList[i].checked){
+          partnerParam += (partnerList[i].id).toString()
         }
       }
-      //check combotype list
-      let comboTypeList = document.getElementById("flush-collapseTwo").getElementsByClassName("form-check-input")
-      for (let i = 0; i < comboTypeList.length; i++) {
-        if(comboTypeList[i].checked){
-          comboTypeParam += (comboTypeList[i].id).toString()
+      //check catalogue list
+      let catalogueList = document.getElementById("flush-collapseTwo").getElementsByClassName("form-check-input")
+      for (let i = 0; i < catalogueList.length; i++) {
+        if(catalogueList[i].checked){
+          catalogueParam += (catalogueList[i].id).toString()
         }
       }
       //check price list
@@ -30,16 +30,9 @@
         if (priceList[i].checked){
           priceParam +=  (priceList[i].id).toString()
         }
-      }
-      //check type list
-      let typeList = document.getElementById("flush-collapseFour").getElementsByClassName("form-check-input")
-      for (let i = 0; i < typeList.length; i++) {
-        if (typeList[i].checked){
-          typeParam = "type=" +  (typeList[i].id).toString()
-        }
-      }
+      } 
 
-      window.location= `${baseUrl}${storeParam}&${comboTypeParam}&${priceParam}&${typeParam}`
+      window.location= `${baseUrl}${partnerParam}&${catalogueParam}&${priceParam}`
     }
 
  </script> 
@@ -48,7 +41,7 @@
   {{!-- option-list : Start --}}
   <div class="col-3 option-list">
     <div class="accordion accordion-flush" >
-      {{!-- option-store : Start --}}
+      {{!-- option-partner : Start --}}
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingOne">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne" >
@@ -56,63 +49,41 @@
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" >
-          <div class="accordion-body store-list">
-            {{#each storeList}}
+          <div class="accordion-body partner-list">
+            {{#each partnerList}}
             <div class="form-check" >
-              <input  class="form-check-input" type="checkbox" name="store" id="{{id}}" onclick="queryParameter()">
+              <input  class="form-check-input" type="checkbox" name="partner" id="{{id}}" onclick="queryParameter()">
               <label class="form-check-label" for="{{id}}" >
                 {{name}}
               </label>
             </div>
             {{/each}}
-            {{!-- <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-              <label class="form-check-label" for="flexRadioDefault2">
-                Familly Mart
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-              <label class="form-check-label" for="flexRadioDefault3">
-                CS 25 
-              </label>
-            </div> --}}
           </div>
         </div>
       </div>
-      {{!-- option-store : End --}}
+      {{!-- option-partner : End --}}
 
-      {{!-- option-combo : Start --}}
+      {{!-- option-catalogue : Start --}}
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
-            Kiểu combo
+            Phân loại
           </button>
         </h2>
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" >
           <div class="accordion-body">
+            {{#each catalogueList}}
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="comboType" id="both">
-              <label class="form-check-label" for="both">
-                Combo và đơn
+              <input class="form-check-input" type="radio" name="catalogue" id="{{name}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{name}}">
+                {{name}}
               </label>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="comboType" id="single">
-              <label class="form-check-label" for="single">
-                Đơn
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="comboType" id="combo">
-              <label class="form-check-label" for="combo">
-                Combo
-              </label>
-            </div>
+            {{/each}}
           </div>
         </div>
       </div>
-      {{!-- option-combo : End --}}
+      {{!-- option-catalogue : End --}}
 
       {{!-- option-price : Start --}}
       <div class="accordion-item">
@@ -122,7 +93,7 @@
           </button>
         </h2>
         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" >
-          <div class="accordion-body store-list">
+          <div class="accordion-body partner-list">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="price" id="1" >
               <label class="form-check-label" for="1">
@@ -146,49 +117,17 @@
       </div>
       {{!-- option-price : End --}}
 
-      {{!-- option-type : Start --}}
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingFour">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="true" aria-controls="flush-collapseFour">
-            Loại sản phẩm
-          </button>
-        </h2>
-        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" >
-          <div class="accordion-body">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="type" id="both">
-              <label class="form-check-label" for="both">
-                Thức ăn và thức uống
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="type" id="food">
-              <label class="form-check-label" for="food">
-                Thức ăn
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="type" id="drink">
-              <label class="form-check-label" for="drink">
-                Thức uống
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{!-- option-type : End --}}
-
     </div>
   </div>
   {{!-- product-list : Start --}}
   <div class="col-7" id="product">
     {{#each productList}}
     <div class="card" style="width: 18rem;">
-      <img src="/images/HDA TEAM.png" alt="Food image">
+      <img src="{{productImageUrl}}" alt="{{productName}}">
       {{!-- <a href="/menu/sss">sss</a> --}}
       <div class="product-body">
         <a href="detail/{{id}}" class="product-title">
-          {{name}}
+          {{productName}}
         </a>
         <p class="product-price">
           {{price}}đ

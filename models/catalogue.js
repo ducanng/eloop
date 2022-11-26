@@ -45,4 +45,13 @@ async function removeCatalogue(account){
   }
 }
 
-module.exports = {catalogue,findCatalogue,addCatalogue,removeCatalogue}
+async function getCatalogueList(){
+  const catalogueList = await catalogue.findAll()
+  if (catalogueList === null){
+    console.log('catalogueList are not exists')
+  }else{
+    console.log('catalogueList list is built!')
+  }
+  return catalogueList
+}
+module.exports = {catalogue,findCatalogue,addCatalogue,removeCatalogue,getCatalogueList}
