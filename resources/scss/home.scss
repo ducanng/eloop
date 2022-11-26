@@ -2,6 +2,11 @@ body {
     margin: 0;
     padding: 0;
 }
+
+#home {
+    background-color: #bef6de;
+}
+
 .img {
     background-image: url("../images/banner.jpg");
     background-size: cover;
@@ -21,7 +26,7 @@ body {
 
 $bg: #f3f8fa;
 $white: #fff;
-$black: #52b6f9;
+$black: #35d608;
 
 @mixin transition($property: all, $duration: 0.45s, $ease: cubic-bezier(0.65, 0, 0.076, 1)) {
     transition: $property $duration $ease;
