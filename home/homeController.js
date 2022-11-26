@@ -1,4 +1,4 @@
-const {partner,findpartner,addpartner,removepartner,getpartnerList} = require('../models/partner')
+const {partner,findPartner,addPartner,removePartner,getPartnerList} = require('../models/partner')
 
 exports.getPartner = async (req,res,next) =>{
     const partnerList = await getPartnerList()
