@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const productController = require('../products/productController')
+const sellProductController = require('../orders/orderController')
 
-router.get('/', productController.getListProduct);
-router.get('/:expore', productController.getListProductQueryParam);
+router.get('/', sellProductController.getSellProductList);
+router.post('/:id', sellProductController.addToSellProduct);
+
 
 
 

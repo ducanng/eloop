@@ -1,0 +1,32 @@
+
+<div id="menu" class="container">
+  {{#each sellProductList}}
+  <div class="card" style="width: 18rem;">
+    <img src="{{productImageUrl}}" alt="{{productName}}">
+    {{!-- <a href="/menu/sss">sss</a> --}}
+    <div class="product-body">
+      <a href="product/detail/{{id}}" class="product-title">
+        {{productName}}
+      </a>
+      <p class="product-price">
+        {{price}}đ
+      </p>
+      <form action="/order/{{id}}" method="post">
+        <button class="learn-more">
+          <a href="#">
+              <span class="circle" aria-hidden="true">
+                  <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Loại bỏ</span>
+          </a>
+        </button>
+      </form>
+    </div>
+  </div>
+  {{/each}}
+  {{!-- product-list : End --}}
+
+  {{!-- sort-list : Start --}}
+  <div class="col-2 sort-list"></div>
+  {{!-- sort-list : End --}}
+</div>
