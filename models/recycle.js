@@ -1,49 +1,61 @@
-// const { sequelize,DataTypes } = require('../config/db');
+const { sequelize,DataTypes } = require('../config/db');
 
-// recycles: id, name, imageURL, description, phoneNum
-// const recycle = sequelize.define('recycles', {
-//   // Model attributes are defined here
-//   name: {
-//     type: DataTypes.STRING,
-//     allowNull: false
-//   },
-// }, {
-//   // Other model options go here
-// });
 
-// // `sequelize.define` also returns the model
-// console.log(catalogue === sequelize.models.catalogue); // true
+const recycle = sequelize.define('recycle', {
+  // Model attributes are defined here
+  recycleName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  recycleImageURL: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  recycleDescription: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  recyclePhoneNum: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+}, {
+  // Other model options go here
+});
 
-// async function findCatalogue(account){
-//   const catalogueInstance = await catalogue.findOne({where : {account:account}})
-//   if (catalogueInstance === null){
-//     console.log('Not found!')
-//   }else{
-//     console.log('catalogue is found!')
-//   }
-//   return catalogueInstance
-// }
+// `sequelize.define` also returns the model
+console.log(recycle === sequelize.models.recycle); // true
 
-// async function addCatalogue(name, account, password){
-//   const existCatalogue = await findCatalogue(account)
-//   if(existCatalogue === null){
-//     const catalogueInstance = catalogue.create({name: name, account: account, password : password})
-//     console.log('Catalogue is added!')
-//   }
-//   else {
-//     console.log('Catalogue is exist!')
-//   }
-// }
+async function findRecycle(account){
+  const recycleInstance = await recycle.findOne({where : {account:account}})
+  if (recycleInstance === null){
+    console.log('Not found!')
+  }else{
+    console.log('recycle is found!')
+  }
+  return recycleInstance
+}
 
-// async function removeCatalogue(account){
-//   const catalogueInstance = await findCatalogue(account)
-//   if(catalogueInstance === null){
-//     console.log('Catalogue is not exist!')
-//   }
-//   else {
-//     catalogueInstance.destroy()
-//     console.log('Catalogue is removed!')
-//   }
-// }
+async function addRecycle(name, account, password){
+  const existRecycle = await findRecycle(account)
+  if(existRecycle === null){
+    const recycleInstance = recycle.create({name: name, account: account, password : password})
+    console.log('recycle is added!')
+  }
+  else {
+    console.log('recycle is exist!')
+  }
+}
 
-// module.exports = {catalogue,findCatalogue,addCatalogue,removeCatalogue}
+async function removeRecycle(account){
+  const recycleInstance = await findRecycle(account)
+  if(recycleInstance === null){
+    console.log('recycle is not exist!')
+  }
+  else {
+    recycleInstance.destroy()
+    console.log('recycle is removed!')
+  }
+}
+
+module.exports = {recycle,findRecycle,addRecycle,removeRecycle}
