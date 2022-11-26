@@ -57,5 +57,13 @@ async function removeRecycle(account){
     console.log('recycle is removed!')
   }
 }
-
-module.exports = {recycle,findRecycle,addRecycle,removeRecycle}
+async function getRecycleList(){
+  const recycleList = await recycle.findAll()
+  if (recycleList === null){
+    console.log('recycle are not exists')
+  }else{
+    console.log('recycle list is built!')
+  }
+  return recycleList
+}
+module.exports = {recycle,findRecycle,addRecycle,removeRecycle,getRecycleList}

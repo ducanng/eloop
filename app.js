@@ -12,17 +12,9 @@ const productRouter = require('./products/productRouter');
 const usersRouter = require('./users/userRouter');
 const loginRouter = require('./routes/login');
 const feedbackRouter = require('./routes/feedback');
-
-// var hbs = handlebars.create({
-//   // Specify helpers which are only registered on this instance.
-//   helpers: {
-//     loud:  function (aString) {
-//       return aString.toUpperCase()},
-//     bar: function () { return 'BAR!'; }
-//   }
-// });
+const recycleRouter = require('./recycles/recycleRouter');
+const charityRouter = require('./charities/charityRouter');
     
-
 
 const app = express();
 const port = 3000;
@@ -58,6 +50,8 @@ app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/login', loginRouter);
+app.use('/recycle', recycleRouter);
+app.use('/charity', charityRouter);
 
 
 // catch 404 and forward to error handler
