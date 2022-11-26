@@ -20,13 +20,25 @@ async function findSellProduct(id){
 }
 
 async function addSellProduct(userId,productId){
-  const existProduct = await findSellProduct(account)
-  if(existProduct === null){
-    const productInstance = sellProduct.create({userId: userId, productId: productId})
-    console.log('SellProduct is added!')
+  //   INSERT INTO admins(id, name, account, password, createdAt, updatedAt) VALUES
+// (1, 'Letha241', 'Bolt@nowhere.com', 'gaaapjacc', '2016-01-01 00:07:13', '2017-01-01 00:00:04'),
+  const productInstance = sellProduct.create({userId: userId, productId: productId})
+  // sellProduct.update({userId:userId,productId:productId})
+  if (userId ===undefined){
+    userId = 1
+  }
+  // var normalizedDate = new Date(Date.now()).toISOString();
+  // await sellProduct.sequelize.query(
+  //   `INSERT INTO sellProducts( createdAt,updatedAt,productId, userId) VALUE (${normalizedDate},${normalizedDate},${userId},${productId})`,
+  //   {
+  //    type: sequelize.QueryTypes.INSERT,
+  //   },
+  //  );
+  if(productInstance === null){
+    console.log('SellProduct is fail!')
   }
   else {
-    console.log('SellProduct is exist!')
+    console.log('SellProduct is add!')
   }
 }
 
@@ -48,8 +60,8 @@ async function getSellProductList(userId){
     { type: sequelize.QueryTypes.SELECT
         ,model : product
    });
-        //    console.log(productInstance);     
-        //    console.log(productInstance.length);       
+    //    console.log(productInstance);     
+    //    console.log(productInstance.length);       
   if (productInstance === null){
     console.log('list empty')
   }else{
@@ -64,5 +76,4 @@ module.exports = {
   addSellProduct,
   removeSellProduct,
   getSellProductList,
-
 }

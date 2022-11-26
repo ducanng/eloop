@@ -29,6 +29,7 @@ exports.postUserLogin = async (req,res,next) => {
     if(existUser !== null && existUser.password === req.body.password){
         console.log('Login success')
         global.userLogined = true
+        global.userLoginId = findUserId
         res.render('users/home',{userLogined : global.userLogined})
     } else {
         console.log('Wrong account or password')
