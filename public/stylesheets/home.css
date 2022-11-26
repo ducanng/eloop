@@ -3,6 +3,14 @@ body {
   margin: 0;
   padding: 0; }
 
+.img {
+  background-image: url("../images/banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  opacity: 0.7; }
+
 .media {
   display: flex;
   align-items: flex-start; }
@@ -78,3 +86,77 @@ button {
       transform: translate(1rem, 0); }
   button:hover .button-text {
     color: #fff; }
+
+@keyframes scaleCircle {
+  0% {
+    transform: scale(0); }
+  100% {
+    transform: scale(1); } }
+
+@keyframes rotateDots {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }
+
+.layer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; }
+
+.layer-1 {
+  z-index: 1; }
+
+.layer-2 {
+  z-index: 2; }
+
+.animation-0 {
+  animation-name: rotateDots;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+  animation-timing-function: ease; }
+
+.animation-01 {
+  animation: scaleCircle 0.5s 0s cubic-bezier(0.35, 1.35, 0.5, 1) backwards; }
+
+.animation-02 {
+  animation: scaleCircle 0.5s 0.5s cubic-bezier(0.35, 1.35, 0.5, 1) backwards; }
+
+main {
+  height: 500px;
+  display: grid;
+  align-items: center; }
+
+main img {
+  width: 200px;
+  height: 200px;
+  animation-name: rotate;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  border-radius: 50%; }
+
+@keyframes rotate {
+  from {
+    transform: rotate(-360deg); }
+  to {
+    transform: rotate(360deg); } }
+
+.curved-text {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 32px; }
+
+.curved-text span {
+  min-width: 0.5em;
+  text-align: center;
+  padding: 30px;
+  margin: 0px; }
