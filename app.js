@@ -18,7 +18,7 @@ const feedbackRouter = require('./routes/feedback');
 const recycleRouter = require('./recycles/recycleRouter');
 const charityRouter = require('./charities/charityRouter');
 const orderRouter = require('./orders/orderRouter');
-
+const searchRouter = require('./searchs/searchRouter');
     
 
 const app = express();
@@ -53,6 +53,7 @@ app.use('/home', homeRouter);
 app.use('/menu',productRouter);
 app.use('/product', detailRouter);
 app.use('/order', orderRouter);
+app.use('/search', searchRouter);
 app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
