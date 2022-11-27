@@ -4,7 +4,7 @@
 window.onload = function() {
   let userLogined = sessionStorage.getItem("isLogin")
   window.console.log(`heder ${userLogined}`)
-  if (userLogined === "false"){
+  if (userLogined === "false" || userLogined === null){
     // Not login
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0).textContent = 'Đăng nhập'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'none'
