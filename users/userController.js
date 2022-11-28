@@ -1,4 +1,4 @@
-const {user,findUser,addUser,updateUser} = require("../models/user.js")
+const {user,findUser,addUser,updateUser,findUserId} = require("../models/user.js")
 
 exports.getUserLogin = (req,res,next) => {
 

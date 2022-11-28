@@ -148,11 +148,29 @@ async function getProductList(partnerId,catalogueName,price){
   return productList
 }
 
+
+async function searchProduct(key){
+  const productList = await sequelize.query(
+    'SELECT * FROM products WHERE productName LIKE :search_name',
+    {
+      replacements: { search_name: `%${key}%` },
+      type: sequelize.QueryTypes.SELECT
+    }
+  );          
+
+  if (productList === null){
+    console.log('productList Not found!')
+  }else{
+    console.log('productList is build!')
+  }
+  return productList
+}
 module.exports = {
   product,
   findProduct,
   addProduct,
   removeProduct,
   getProductList,
-  findRelativeProduct
+  findRelativeProduct,
+  searchProduct
 }

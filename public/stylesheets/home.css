@@ -6,6 +6,9 @@ body {
 #home {
   background-color: #bef6de; }
 
+.navbar-logo{
+  padding-left: 20px;}
+  
 .img {
   background-image: url("../images/banner.jpg");
   background-size: cover;
