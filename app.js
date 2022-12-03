@@ -24,7 +24,8 @@ const searchRouter = require('./searchs/searchRouter');
     
 
 const app = express();
-const port = 3000;
+
+port = process.env.PORT || 80
 
 // view engine setup
 app.engine('.hbs', handlebars.engine({
@@ -44,10 +45,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//
-app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`)
-})
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on http://localhost:${port}`)
+// })
+app.listen(port || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 global.userLogined= true
 
 

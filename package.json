@@ -15,15 +15,18 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "node-sass": "^8.0.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "npm-watch": "^0.11.0",
     "sass": "^1.56.1",
-    "sequelize": "^6.25.6"
-  }, 
+    "sequelize": "^6.26.0",
+    "sequelize-cli": "^6.5.2"
+  },
   "engines": {
-    "node": "18.12.1"
+    "node": "18.12.1",
+    "npm": "8.19.2"
   }
 }
