@@ -6,22 +6,16 @@ const logger = require('morgan');
 const handlebars = require('express-handlebars')
 
 const homeRouter = require('./home/homeRouter');
-const indexRouter = require('./routes/index');
 const productRouter = require('./products/productRouter');
 const detailRouter = require('./products/detailRouter');
-
-
 const usersRouter = require('./users/userRouter');
-const loginRouter = require('./routes/login');
-const infoRouter = require('./routes/info');
-const feedbackRouter = require('./routes/feedback');
+const infoRouter = require('./info/infoRouter');
+const feedbackRouter = require('./feedback/feedbackRouter');
 const recycleRouter = require('./recycles/recycleRouter');
 const charityRouter = require('./charities/charityRouter');
 const orderRouter = require('./orders/orderRouter');
-
+const loginRouter = require('./routes/login');
 const searchRouter = require('./searchs/searchRouter');
-
-    
 
 const app = express();
 
@@ -36,33 +30,23 @@ app.engine('.hbs', handlebars.engine({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs');
 
-
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(z__dirname, 'public')));
 
-
-// app.listen(port, () => {
-//   console.log(`Example app listening on http://localhost:${port}`)
-// })
-app.listen(port || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+app.listen(port , () => {
+  console.log("Express server listening on port http://localhost:%d in %s mode", this.address().port, app.settings.env);
 });
 global.userLogined= true
 
-
+app.use('/', homeRouter);
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);
 app.use('/product', detailRouter);
 app.use('/order', orderRouter);
-
 app.use('/search', searchRouter);
-
-app.use('/', homeRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/login', loginRouter);
