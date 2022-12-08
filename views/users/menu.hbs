@@ -5,10 +5,13 @@
  <script type="text/javascript">
     function queryParameter(){
       // http://localhost:3000/menu/explore?partner=&catalogue=&price=
-      const baseUrl = "https://eloop-user-hda.herokuapp.com/menu/explore?"
+      const localURL = "http://localhost:80"
+      const hostURL = "https://eloop-user-hda.herokuapp.com"
+      const baseUrl = `${hostURL}/menu/explore?`
       var partnerParam = "partner="
       let catalogueParam = "catalogue="
       let priceParam = "price="
+      let sortingParam = "sorting="
   
       //check partner list
       let partnerList = document.getElementById("flush-collapseOne").getElementsByClassName("form-check-input")
@@ -31,8 +34,15 @@
           priceParam +=  (priceList[i].id).toString()
         }
       } 
+      //check sort list
+      let sortingList = document.getElementById("flush-collapseFour").getElementsByClassName("form-check-input")
+      for (let i = 0; i < sortingList.length; i++) {
+        if (sortingList[i].checked){
+          sortingParam +=  (sortingList[i].id).toString()
+        }
+      } 
       
-      window.location= `${baseUrl}${partnerParam}&${catalogueParam}&${priceParam}`
+      window.location= `${baseUrl}${partnerParam}&${catalogueParam}&${priceParam}&${sortingParam}`
     }
  
 
@@ -75,8 +85,8 @@
           <div class="accordion-body">
             {{#each catalogueList}}
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="catalogue" id="{{name}}" onclick="queryParameter()">
-              <label class="form-check-label" for="{{name}}">
+              <input class="form-check-input" type="radio" name="catalogue" id="{{id}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{id}}">
                 {{name}}
               </label>
             </div>
@@ -95,22 +105,49 @@
         </h2>
         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" >
           <div class="accordion-body partner-list">
+            {{#if priceList}}
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="1" >
-              <label class="form-check-label" for="1">
-                0 - 10.000
+              <input class="form-check-input" type="radio" name="price" id="0,{{priceList.[0]}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{priceList.[0]}}">
+               0 - {{priceList.[0]}}
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="2">
-              <label class="form-check-label" for="2">
-                10.000 - 20.000
+              <input class="form-check-input" type="radio" name="price" id="{{priceList.[0]}},{{priceList.[1]}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{priceList.[1]}}">
+                {{priceList.[0]}} - {{priceList.[1]}}
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="3">
-              <label class="form-check-label" for="3">
-                20.000 - 30.000 
+              <input class="form-check-input" type="radio" name="price" id="{{priceList.[1]}},{{priceList.[2]}}" onclick="queryParameter()">
+              <label class="form-check-label" for="{{priceList.[2]}}">
+                {{priceList.[1]}} - {{priceList.[2]}}
+              </label>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{!-- option-price : End --}}
+      {{!-- option-price : Start --}}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="true" aria-controls="flush-collapseFour">
+            Sắp xếp giá
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" >
+          <div class="accordion-body partner-list">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sorting" id="ASC" onclick="queryParameter()">
+              <label class="form-check-label" for="ASC">
+                Tăng dần
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sorting" id="DESC" onclick="queryParameter()">
+              <label class="form-check-label" for="DESC">
+                Giảm dần
               </label>
             </div>
           </div>
@@ -151,5 +188,6 @@
 
   {{!-- sort-list : Start --}}
   <div class="col-2 sort-list"></div>
+  
   {{!-- sort-list : End --}}
 </div>
