@@ -7,10 +7,11 @@
                 </div>
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
-                        <h1 class="fs-4 card-title fw-bold mb-4 text-success">Register</h1>
-                        <form method="POST" class="needs-validation" novalidate="" autocomplete="on">
+                        <h1 class="fs-4 card-title fw-bold text-success">ĐĂNG KÝ</h1>
+                        <p class="text-danger">{{error}}</p>
+                        <form method="POST" action="/user/signup" class="needs-validation" novalidate="" autocomplete="on">
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="name">Full Name</label>
+                                <label class="mb-2 text-muted" for="name">Họ và tên</label>
                                 <input id="name" type="text" class="form-control" name="name" minlength="4"
                                     placeholder="Full Name" value="{{name}}" required autofocus>
                                 <div class="invalid-feedback">
@@ -18,58 +19,55 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="phone">Phone number</label>
+                                <label class="mb-2 text-muted" for="phone">Số điện thoại</label>
                                 <input id="phone" type="tel" class="form-control" name="phone" minlength="10"
                                     maxlength="10" placeholder="0123456789" pattern="[0-9]{10}" value="{{phone}}"
                                     required autofocus>
                                 <div class="invalid-feedback">
-                                    Bắt buộc
+                                    Chưa đúng định dạng
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" value="{{email}}"
-                                    required>
+                                <label class="mb-2 text-muted" for="username">E-Mail</label>
+                                <input id="username" type="email" class="form-control" name="username" value="{{username}}"
+                                    required autofocus>
                                 <div class="invalid-feedback">
                                     Email không đúng định dạng
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="password">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" minlenght="6"
-                                    required>
+                                <label class="mb-2 text-muted" for="password">Mật khẩu</label>
+                                <input id="password" type="password" class="form-control" name="password" minlength="6"
+                                    required autofocus>
                                 <div class="invalid-feedback">
-                                    Bắt buộc và ít nhất 6 ký tự
+                                    Bắt buộc và ít nhất 6 kí tự
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="confirm-password">Confirm Password</label>
-                                <input id="confirm-password" type="password" class="form-control"
-                                    name="confirm-password" onfocus="confirmPassword()" required>
+                                <label class="mb-2 text-muted" for="confirm_password">Xác nhận mật khẩu</label>
+                                <input id="confirm_password" type="password" class="form-control"
+                                    name="confirm_password" required>
                                 <div class="invalid-feedback">
                                     Bắt buộc
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <input id="show" type="checkbox" name="show" onclick="showPassword()">
-                                <label class="mb-2 text-muted" for="show">Show Password</label>
-                            </div>
-                            <p class="form-text text-muted mb-3">
-                                By registering you agree with our terms and condition.
-                            </p>
 
                             <div class="align-items-center d-flex">
+                                <div class="mb-3">
+                                    <input id="show" type="checkbox" name="show" onclick="showPassword()">
+                                    <label class="mb-2 text-muted" for="show">Hiển thị mật khẩu</label>
+                                </div>
                                 <button type="submit" class="btn btn-success ms-auto">
-                                    Register
+                                    Đăng ký
                                 </button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer py-3 border-0">
                         <div class="text-center">
-                            Already have an account? <a href="/user/signin" class="text-dark">Login</a>
+                            Bạn đã có tài khoản? <a href="/user/signin" class="text-dark">Đăng nhập</a>
                         </div>
                     </div>
                 </div>
@@ -96,10 +94,10 @@
                     form.classList.add('was-validated')
                 }, false)
             })
-    })()
+    }) ()
     function showPassword() {
         var x = document.getElementById("password");
-        var y = document.getElementById("confirm-password");
+        var y = document.getElementById("confirm_password");
 
         if (x.type === "password" && y.type === "password") {
             x.type = "text";
@@ -107,16 +105,6 @@
         } else {
             x.type = "password";
             y.type = "password";
-        }   
-    }
-    function confirmPassword() {
-        console.log("dsad")
-        var x = document.getElementById("password");
-        var y = document.getElementById("confirm-password");
-        if (x.value !== y.value) {
-            y.setCustomValidity("Mật khẩu không khớp");
-        } else {
-            y.setCustomValidity('');
         }
     }
 </script>

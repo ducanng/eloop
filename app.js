@@ -54,14 +54,13 @@ app.use(function (req, res, next) {
   res.locals.login = req.user;
   next();}
 );
-
 app.use('/', homeRouter);
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);
 app.use('/product', detailRouter);
 app.use('/order', orderRouter);
 app.use('/search', searchRouter);
-app.use('/user', usersRouter);
+app.use('/user', userRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
