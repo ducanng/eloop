@@ -4,17 +4,18 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const handlebars = require('express-handlebars')
+const session = require('express-session');
 
+const passport = require('./config/passport');
 const homeRouter = require('./home/homeRouter');
 const productRouter = require('./products/productRouter');
 const detailRouter = require('./products/detailRouter');
 const usersRouter = require('./users/userRouter');
-const infoRouter = require('./info/infoRouter');
 const feedbackRouter = require('./feedback/feedbackRouter');
 const recycleRouter = require('./recycles/recycleRouter');
 const charityRouter = require('./charities/charityRouter');
 const orderRouter = require('./orders/orderRouter');
-const loginRouter = require('./routes/login');
+const userRouter = require('./users/userRouter');
 const searchRouter = require('./searchs/searchRouter');
 
 const app = express();
@@ -34,12 +35,25 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(z__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 
 app.listen(port , () => {
-  console.log("Express server listening on port http://localhost:%d in %s mode", this.address().port, app.settings.env);
+  console.log("Express server listening on port http://localhost:%d in %s mode", port, app.settings.env);
 });
-global.userLogined= true
+//global.userLogined= true
+app.use(function (req, res, next) {
+  res.locals.login = req.user;
+  next();}
+);
 
 app.use('/', homeRouter);
 app.use('/home', homeRouter);
@@ -49,8 +63,6 @@ app.use('/order', orderRouter);
 app.use('/search', searchRouter);
 app.use('/user', usersRouter);
 app.use('/feedback', feedbackRouter);
-app.use('/login', loginRouter);
-app.use('/info', infoRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
 

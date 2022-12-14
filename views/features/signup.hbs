@@ -1,0 +1,122 @@
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="/images/logo.png" alt="logo" width="200">
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4 text-success">Register</h1>
+                        <form method="POST" class="needs-validation" novalidate="" autocomplete="on">
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="name">Full Name</label>
+                                <input id="name" type="text" class="form-control" name="name" minlength="4"
+                                    placeholder="Full Name" value="{{name}}" required autofocus>
+                                <div class="invalid-feedback">
+                                    Bắt buộc và ít nhất 4 ký tự
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="phone">Phone number</label>
+                                <input id="phone" type="tel" class="form-control" name="phone" minlength="10"
+                                    maxlength="10" placeholder="0123456789" pattern="[0-9]{10}" value="{{phone}}"
+                                    required autofocus>
+                                <div class="invalid-feedback">
+                                    Bắt buộc
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+                                <input id="email" type="email" class="form-control" name="email" value="{{email}}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Email không đúng định dạng
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="password">Password</label>
+                                <input id="password" type="password" class="form-control" name="password" minlenght="6"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Bắt buộc và ít nhất 6 ký tự
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="confirm-password">Confirm Password</label>
+                                <input id="confirm-password" type="password" class="form-control"
+                                    name="confirm-password" onfocus="confirmPassword()" required>
+                                <div class="invalid-feedback">
+                                    Bắt buộc
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input id="show" type="checkbox" name="show" onclick="showPassword()">
+                                <label class="mb-2 text-muted" for="show">Show Password</label>
+                            </div>
+                            <p class="form-text text-muted mb-3">
+                                By registering you agree with our terms and condition.
+                            </p>
+
+                            <div class="align-items-center d-flex">
+                                <button type="submit" class="btn btn-success ms-auto">
+                                    Register
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer py-3 border-0">
+                        <div class="text-center">
+                            Already have an account? <a href="/user/signin" class="text-dark">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    function showPassword() {
+        var x = document.getElementById("password");
+        var y = document.getElementById("confirm-password");
+
+        if (x.type === "password" && y.type === "password") {
+            x.type = "text";
+            y.type = "text";
+        } else {
+            x.type = "password";
+            y.type = "password";
+        }   
+    }
+    function confirmPassword() {
+        console.log("dsad")
+        var x = document.getElementById("password");
+        var y = document.getElementById("confirm-password");
+        if (x.value !== y.value) {
+            y.setCustomValidity("Mật khẩu không khớp");
+        } else {
+            y.setCustomValidity('');
+        }
+    }
+</script>

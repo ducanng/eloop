@@ -1,5 +1,5 @@
 <!-- Header -->
-<script type="text/javascript">
+{{!-- <script type="text/javascript">
 
 window.onload = function() {
   let userLogined = sessionStorage.getItem("isLogin")
@@ -16,7 +16,7 @@ window.onload = function() {
     // logined
     let i = document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(0)
     i.textContent = 'Thông tin người dùng'
-    i.setAttribute("href","/home")
+    i.setAttribute("href","/user/info")
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(1).style.display = 'show'
     document.getElementsByClassName("userAuthen").item(0).getElementsByClassName("dropdown-item").item(2).style.display = 'show'
 
@@ -29,7 +29,7 @@ window.onload = function() {
     sessionStorage.setItem("isLogin", false);
   }  
 
-</script> 
+</script>  --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
   <a class="navbar-brand" href="/home">
     <img class="navbar-logo" src="/images/logo.png" alt="" height="40px" width="100px">
@@ -63,9 +63,15 @@ window.onload = function() {
             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i>
             <span class="caret"></span></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/login" >Đăng nhập</a>
-                <a class="dropdown-item"  href="/order">Giỏ hàng</a>
-                <a class="dropdown-item"  href="/login" onclick="logout()">Đăng xuất</a>
+                {{#if login }}
+                    <a class="dropdown-item"  href="/order">Giỏ hàng</a>
+                    <a class="dropdown-item"  href="/user/info">Thông tin người dùng</a>
+                    <a class="dropdown-item"  href="/user/logout" onclick="logout()">Đăng xuất</a>
+                {{/if}}
+                {{#unless login}}
+                    <a class="dropdown-item" href="/user/signin" >Đăng nhập</a>
+                    <a class="dropdown-item" href="/user/signup" >Đăng ký</a>
+                {{/unless}} 
               </div>           
       </div>  
             

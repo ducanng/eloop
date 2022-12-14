@@ -1,49 +1,75 @@
-const {user,findUser,addUser,updateUser,findUserId} = require("../models/user.js")
-
-exports.getUserLogin = (req,res,next) => {
-
-    res.render('users/home',{userLogined : global.userLogined})
+const bcrypt = require('bcryptjs');
+const { user } = require("../models/user.js")
+const { findUser, addUser, removeUser, updateUser, findUserId } = require('../users/userRepository.js')
+exports.showSignUp = (req, res, next) => {
+    res.render('features/signup');
 }
 
-exports.postUserCreate = (req,res,next) => {
-    const userEmail= req.body.email
-    if(userEmail.search('@') > 0 && userEmail.search('.com') > 0){
-        console.log('Register success')
-        const userPassword = req.body.password
-        const userPassword2 = req.body.password2
-        addUser(userEmail,userPassword,userPassword2)
-        
-        res.render('users/home',{userLogined : global.userLogined})
-    }
-    else{
-        console.log('Failed')
-        res.redirect('/user')
-    }
-    
-}
-
-
-exports.postUserLogin = async (req,res,next) => {
+exports.signUp = async (req, res, next) => {
     console.log(req.body);
-    const existUser = await findUser(req.body.usermail)
-    if(existUser !== null && existUser.password === req.body.password){
-        console.log('Login success')
-        global.userLogined = true
-        global.userLoginId = findUserId
-        res.render('users/home',{userLogined : global.userLogined})
+    fullname = req.body.name
+    phonenumber = req.body.phone
+    account = req.body.email
+    password = req.body.password
+    repassword = req.body.confirm-password
+    console.log(fullname, phonenumber, account, password, repassword)
+    if (password !== repassword) {
+        console.log('Password not match')
+        res.render('features/signup', { error: 'Mật khẩu không trùng khớp!' });
+        return;
+    }
+    const existUser = await findUser(account)
+    if (existUser !== null) {
+        console.log('User is exist!')
+        res.render('features/signup', { error: 'Tài khoản đã tồn tại!' });
+        return;
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    if (addUser(fullname, account, hash, phonenumber)) {
+        res.redirect('/')
     } else {
-        console.log('Wrong account or password')
-        res.redirect('/user')
+        console.log('User is not added!')
+        res.render('features/signup', { error: 'Đăng ký thất bại!' });
     }
 }
 
-// exports.postUserChangePassword = async (req,res,next) => {
-//     const existUser = await findUser(req.body.username)
-//     if(existUser !== null && existUser.password === req.body.password){
-//         console.log('Login success')
-//         res.render('users/home')
-//     }else{
-//         console.log('Wrong account or password')
-//         res.redirect('/user')
-//     }
-// }
+exports.showSignIn = (req, res, next) => {
+    res.render('features/signin');
+}
+
+exports.signIn = async (req, res, next) => {
+    console.log(req.body);
+    account = req.body.username
+    password = req.body.password
+    const user = await exports.checkUserCredential(account, password)
+    if (user) {
+        req.session.user = user;
+        res.redirect('/')
+    } else {
+        console.log('User is not exist!')
+        res.render('features/signin', { error: 'Tài khoản hoặc mật khẩu không đúng!' });
+    }
+}
+/**
+ * Check user credential and return the user info, otherwise null
+ * @param email
+ * @param password
+ * @returns {Promise<Object|null>}
+ */
+exports.checkUserCredential = async (account, password) => {
+    const user = await findUser(account)
+    if (!user) return null;
+    if (await bcrypt.compare(password, user.password))
+        return user;
+    return null;
+}
+
+exports.logout = (req, res) => {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+};
