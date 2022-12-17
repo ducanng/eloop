@@ -2,6 +2,11 @@ const { sequelize,DataTypes } = require('../config/db');
 
 
 const user = sequelize.define('user', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   // Model attributes are defined here
   name: {
     type: DataTypes.STRING,
@@ -14,6 +19,10 @@ const user = sequelize.define('user', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   phone_number: {
     type: DataTypes.STRING,
@@ -31,6 +40,15 @@ const user = sequelize.define('user', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  
 }, {
   // Other model options go here
 });

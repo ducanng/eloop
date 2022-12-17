@@ -1,3 +1,4 @@
+{{#with user}}
 <section class="section profile" style="background-color: #11a683;">
   <div class="row">
     <div class="col-xl-4">
@@ -5,15 +6,10 @@
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-          <img src="images/D.jpg" alt="Profile" class="rounded-circle">
+          {{!-- <img src="{{image}}" alt="Profile" class="rounded-circle"> --}}
+          <img src="{{image}}" alt="Profile" class="rounded-circle">
           <h2>D.</h2>
           <h3>Rank</h3>
-          <div class="social-links mt-2">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
         </div>
       </div>
 
@@ -33,8 +29,6 @@
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Chỉnh sửa thông tin</button>
             </li>
-
-
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Thay đổi mật
                 khẩu</button>
@@ -42,54 +36,44 @@
 
           </ul>
           <div class="tab-content pt-2">
-
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <h5 class="card-title">Giới thiệu</h5>
-              <p class="small fst-italic">...</p>
-
               <h5 class="card-title">Thông tin người dùng</h5>
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label ">Họ tên</div>
-                <div class="col-lg-9 col-md-8">D. </div>
+                <div class="col-lg-9 col-md-8">{{name}}</div>
               </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label">Company</div>
-                <div class="col-lg-9 col-md-8">...</div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label">Nghề nghiệp</div>
-                <div class="col-lg-9 col-md-8">...</div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label">Quốc tịch</div>
-                <div class="col-lg-9 col-md-8">...</div>
-              </div>
-
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
-                <div class="col-lg-9 col-md-8">...</div>
+                <div class="col-lg-9 col-md-8">{{address}}</div>
               </div>
-
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
-                <div class="col-lg-9 col-md-8">+84 .....</div>
+                <div class="col-lg-9 col-md-8">{{phone_number}}</div>
               </div>
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Email</div>
-                <div class="col-lg-9 col-md-8">info@example.com</div>
+                <div class="col-lg-9 col-md-8">{{account}}</div>
               </div>
-
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Lượng sản phẩm đã mua</div>
+                <div class="col-lg-9 col-md-8">{{number_product}}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Lượng sản phẩm đã từ thiện</div>
+                <div class="col-lg-9 col-md-8">{{number_charity}}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Lượng sản phẩm đã tái chế</div>
+                <div class="col-lg-9 col-md-8">{{number_recycles}}</div>
+              </div>
             </div>
 
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
               <!-- Profile Edit Form -->
-              <form>
+              <form method="POST">
                 <div class="row mb-3">
                   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Hình đại diện</label>
                   <div class="col-md-8 col-lg-9">
@@ -104,89 +88,29 @@
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ Tên</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="fullName" type="text" class="form-control" id="fullName" value="D.">
+                    <input name="fullName" type="text" class="form-control" id="fullName" value="" minlength="4">
                   </div>
                 </div>
-
-                <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label">Giới thiệu</label>
-                  <div class="col-md-8 col-lg-9">
-                    <textarea name="about" class="form-control" id="about" style="height: 100px">...</textarea>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="company" class="col-md-4 col-lg-3 col-form-label">Doanh nghiệp</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="company" type="text" class="form-control" id="company" value="...">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Job" class="col-md-4 col-lg-3 col-form-label">Nghề nghiệp</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Country" class="col-md-4 col-lg-3 col-form-label">Quốc tịch</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="country" type="text" class="form-control" id="Country" value="...">
-                  </div>
-                </div>
-
                 <div class="row mb-3">
                   <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="address" type="text" class="form-control" id="Address" value="...">
                   </div>
                 </div>
-
                 <div class="row mb-3">
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="phone" type="text" class="form-control" id="Phone" value="+84 ..">
+                    <input name="phone" type="text" class="form-control" id="Phone" value="" pattern="[0-9]{10}" title="Vui lòng nhập đúng số điện thoại">
                   </div>
                 </div>
 
-                <div class="row mb-3">
+                {{!-- <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="info@example.com">
+                    <input name="email" type="email" class="form-control" id="Email" value="info@example.com"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Vui lòng nhập đúng mẫu email">
                   </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="facebook" type="text" class="form-control" id="Facebook"
-                      value="https://facebook.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="instagram" type="text" class="form-control" id="Instagram"
-                      value="https://instagram.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="linkedin" type="text" class="form-control" id="Linkedin"
-                      value="https://linkedin.com/#">
-                  </div>
-                </div>
+                </div> --}}
 
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -239,7 +163,7 @@
 
             <div class="tab-pane fade pt-3" id="profile-change-password">
               <!-- Change Password Form -->
-              <form>
+              <form method="POST" action="user/password">
 
                 <div class="row mb-3">
                   <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -270,10 +194,10 @@
             </div>
 
           </div><!-- End Bordered Tabs -->
-
         </div>
       </div>
 
     </div>
   </div>
 </section>
+{{/with}}

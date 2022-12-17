@@ -9,7 +9,8 @@
                     <div class="card-body p-5">
                         <h1 class="fs-4 card-title fw-bold text-success">ĐĂNG KÝ</h1>
                         <p class="text-danger">{{error}}</p>
-                        <form method="POST" action="/user/signup" class="needs-validation" novalidate="" autocomplete="on">
+                        <form method="POST" action="/user/signup" class="needs-validation" novalidate=""
+                            autocomplete="on">
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="name">Họ và tên</label>
                                 <input id="name" type="text" class="form-control" name="name" minlength="4"
@@ -29,8 +30,9 @@
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="username">E-Mail</label>
-                                <input id="username" type="email" class="form-control" name="username" value="{{username}}"
-                                    required autofocus>
+                                <input id="username" type="email" class="form-control" name="username"
+                                    value="{{username}}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+                                    autofocus>
                                 <div class="invalid-feedback">
                                     Email không đúng định dạng
                                 </div>
@@ -94,7 +96,7 @@
                     form.classList.add('was-validated')
                 }, false)
             })
-    }) ()
+    })()
     function showPassword() {
         var x = document.getElementById("password");
         var y = document.getElementById("confirm_password");

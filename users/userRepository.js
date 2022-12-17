@@ -27,7 +27,7 @@ async function findUser(account){
   async function addUser(name, account, password, phone_number) {
     const existUser = await findUser(account)
     if(existUser === null){
-      const userInstance = user.create({name: name, account: account, password : password, phone_number: phone_number})
+      const userInstance = user.create({name: name, account: account, password : password, phone_number: phone_number, status: 0})
       console.log('User is added!')
       return true
     }
@@ -47,10 +47,26 @@ async function findUser(account){
       console.log('User is removed!')
     }
   }
-  
-  async function updateUser(name, account, password){
+  async function updateInfoUser(account, name, address, phone_number) {
     const userInstance = await user.update({
-      name: name, account: account, password : password},
+      name: name, address: address, phone_number: phone_number},
+      {
+        where : {
+          account: account
+      }
+    })
+    if(userInstance === null){
+      console.log('Updated failed!')
+      return false
+    }
+    else {
+      console.log('User is updated!')
+      return true
+    }
+  }
+  async function updateAccountUser(account, newAccount){
+    const userInstance = await user.update({
+      account: newAccount},
       {
         where : {
           account: account
@@ -60,7 +76,21 @@ async function findUser(account){
       console.log('User is not exist!')
     }
     else {
-      userInstance.destroy()
+      console.log('User is updated!')
+    }
+  }
+  async function updatePasswordUser(account, password){
+    const userInstance = await user.update({
+      password: password},
+      {
+        where : {
+          account: account
+      }
+    })
+    if(userInstance === null){
+      console.log('User is not exist!')
+    }
+    else {
       console.log('User is updated!')
     }
   }
@@ -68,4 +98,4 @@ async function findUser(account){
   // addUser('hu','test','123')
   // updateUser('hu','hh','12345')
   
-  module.exports ={findUser,addUser,removeUser,updateUser,findUserId}
+  module.exports ={findUser,addUser,removeUser,updateInfoUser,updateAccountUser,updatePasswordUser,findUserId}

@@ -15,6 +15,14 @@ const admin = sequelize.define('admin', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   // Other model options go here
 });

@@ -18,6 +18,6 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/logout', userController.logout);
 // router.post('/change_password', userController.postUserChangePassword)
 /* GET home page. */
-router.get('/info', userController.showInfo);
-
+router.get('/info', userController.isLoggedIn, userController.showInfo);
+router.post('/info', userController.isLoggedIn, userController.updateInfo);
 module.exports = router;

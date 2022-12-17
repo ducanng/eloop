@@ -18,7 +18,11 @@ const product = sequelize.define('product', {
   description: {
     type: DataTypes.STRING(3000),
     allowNull: true
-  }
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
   // Other model options go here
 });
