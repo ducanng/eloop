@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { user } = require("../models/user.js")
-const {findUser,addUser,removeUser,updateInfoUser,updateAccountUser,updatePasswordUser,findUserId} = require('../users/userRepository.js')
+const { findUser, addUser, removeUser, updateInfoUser, updateAccountUser, updatePasswordUser, findUserId } = require('../users/userRepository.js')
 exports.showSignUp = (req, res, next) => {
     res.render('features/signup');
 }
@@ -43,10 +43,30 @@ exports.signUp = async (req, res, next) => {
 exports.showSignIn = (req, res, next) => {
     res.render('features/signin');
 }
+exports.signIn = async (req, res, next) => {
+    const account = req.body.username;
+    const password = req.body.password;
+    const user = await exports.checkUserCredential(account, password);
+    if (user) {
+        req.login(user, function (err) {
+            if (err) { return next(err); }
+            var redirectTo = req.session.redirectTo || '/';
+            console.log('redirectTo: ' + redirectTo);
+            // delete the session cookie so it is not present on the next request
+            delete req.session.redirectTo;
+            // redirecting the user to where they want to go
+            res.redirect(redirectTo || '/');
+        });
+    } else {
+        res.render('features/signin', { error: 'Sai tài khoản hoặc mật khẩu!' });
+    }
+}
 exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
+    req.session.redirectTo = req.url;
+    console.log('redirectTo: ' + req.session.redirectTo);
     res.redirect('/user/signin');
 }
 /**
@@ -64,18 +84,18 @@ exports.checkUserCredential = async (account, password) => {
 }
 
 exports.showInfo = async (req, res, next) => {
-    console.log(req.user)
     const user = await findUser(req.user.username)
     res.render('users/info', { user: user });
 }
 exports.updateInfo = async (req, res, next) => {
-    const fullname = req.body.fullName
-    const phonenumber = req.body.Phone
-    const account = req.body.Email
-    const address = req.body.Address
-    const user = await findUser(req.user.username)
+    const fullname = req.body.name
+    const phonenumber = req.body.phone
+    const account = req.user.username
+    const address = req.body.address
+
+    const user = findUser(account)
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
-        if (fullname === null || fullname === '') {
+        if (fullname === null) {
             fullname = user.name
         }
         if (phonenumber === null) {
@@ -85,7 +105,8 @@ exports.updateInfo = async (req, res, next) => {
             address = user.address
         }
         if (updateInfoUser(account, fullname, address, phonenumber)) {
-            res.redirect('/user/info')
+            const user = { name: fullname, account: account, phone_number: phonenumber, address: address, number_product: user.number_product, number_charity: user.number_charity, number_recycles: user.number_recycles }
+            res.render('users/info', { success: 'Cập nhật thành công!', user: user });
         } else {
             res.render('users/info', { error: 'Cập nhật thất bại!', user: user });
         }
@@ -101,3 +122,32 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
+
+exports.changePassword = async (req, res, next) => {
+    const currentPassword = req.body.password
+    const newPassword = req.body.newpassword
+    const reNewPassword = req.body.renewpassword
+    const account = req.user.username
+
+    console.log(currentPassword);
+    console.log(newPassword);
+    console.log(reNewPassword);
+    const user = await findUser(account)
+    if (await bcrypt.compare(currentPassword, user.password)) {
+        if (newPassword === reNewPassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(newPassword, salt);
+            if (updatePasswordUser(account, hash)) {
+                res.render('users/info', { success: 'Đổi mật khẩu thành công!', user: user });
+            } else {
+                res.render('users/info', { error: 'Đổi mật khẩu thất bại!', user: user });
+            }
+        } else {
+            res.render('users/info', { error: 'Mật khẩu mới không khớp!', user: user });
+        }
+    }
+    else {
+        res.render('users/info', { error: 'Mật khẩu hiện tại không đúng!', user: user });
+    }
+
+}

@@ -1,3 +1,13 @@
+{{#if success}}
+<div class="text-center alert alert-success" role="alert">
+  <h1>{{success}}</h1> 
+</div>
+{{/if}}
+{{#if error}}
+<div class="text-center alert alert-danger" role="alert">
+  <h1>{{error}}</h1> 
+</div>
+{{/if}}
 {{#with user}}
 <section class="section profile" style="background-color: #11a683;">
   <div class="row">
@@ -8,8 +18,7 @@
 
           {{!-- <img src="{{image}}" alt="Profile" class="rounded-circle"> --}}
           <img src="{{image}}" alt="Profile" class="rounded-circle">
-          <h2>D.</h2>
-          <h3>Rank</h3>
+          <h2>{{name}}</h2>
         </div>
       </div>
 
@@ -25,7 +34,6 @@
             <li class="nav-item">
               <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Tổng quát</button>
             </li>
-
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Chỉnh sửa thông tin</button>
             </li>
@@ -79,8 +87,7 @@
                   <div class="col-md-8 col-lg-9">
                     <img src="images/D.jpg" alt="Profile">
                     <div class="pt-2">
-
-
+                      <input type="file" class="form-control" id="profileImage">
                     </div>
                   </div>
                 </div>
@@ -88,30 +95,24 @@
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ Tên</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="fullName" type="text" class="form-control" id="fullName" value="" minlength="4">
+                    <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="{{name}}"
+                      minlength="4">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="address" type="text" class="form-control" id="Address" value="...">
+                    <input name="address" type="text" class="form-control" id="Address" value=""
+                      placeholder="{{address}}">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="phone" type="text" class="form-control" id="Phone" value="" pattern="[0-9]{10}" title="Vui lòng nhập đúng số điện thoại">
+                    <input name="phone" type="tel" class="form-control" id="Phone" value="" pattern="[0-9]{10}"
+                      title="Vui lòng nhập đúng số điện thoại" placeholder="{{phone}}">
                   </div>
                 </div>
-
-                {{!-- <div class="row mb-3">
-                  <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="info@example.com"
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Vui lòng nhập đúng mẫu email">
-                  </div>
-                </div> --}}
-
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
@@ -119,11 +120,10 @@
 
             </div>
 
-            <div class="tab-pane fade pt-3" id="profile-settings">
+            {{!-- <div class="tab-pane fade pt-3" id="profile-settings">
 
               <!-- Settings Form -->
-              <form>
-
+              <form method="POST">
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
                   <div class="col-md-8 col-lg-9">
@@ -158,13 +158,11 @@
                   <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
               </form><!-- End settings Form -->
-
-            </div>
+            </div> --}}
 
             <div class="tab-pane fade pt-3" id="profile-change-password">
               <!-- Change Password Form -->
-              <form method="POST" action="user/password">
-
+              <form method="POST" action="/user/password">
                 <div class="row mb-3">
                   <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                   <div class="col-md-8 col-lg-9">
@@ -175,14 +173,14 @@
                 <div class="row mb-3">
                   <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                    <input name="newpassword" type="password" class="form-control" id="newPassword" minlength="4">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                    <input name="renewpassword" type="password" class="form-control" id="renewPassword" minlength="4">
                   </div>
                 </div>
 

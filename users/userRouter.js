@@ -9,15 +9,14 @@ router.post('/signup', userController.signUp);
 // Login
 
 router.get('/signin', userController.showSignIn);
-router.post('/signin', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/user/signin',
-}));
+router.post('/signin', userController.signIn);
 
 //userController.signIn);
-router.get('/logout', userController.logout);
+router.get('/logout', userController.isLoggedIn, userController.logout);
 // router.post('/change_password', userController.postUserChangePassword)
 /* GET home page. */
 router.get('/info', userController.isLoggedIn, userController.showInfo);
 router.post('/info', userController.isLoggedIn, userController.updateInfo);
+
+router.post('/password', userController.isLoggedIn, userController.changePassword);
 module.exports = router;
