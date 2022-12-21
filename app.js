@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const handlebars = require('express-handlebars')
 const session = require('express-session');
-
+const hbs = require('hbs');
 const passport = require('./config/passport');
 const homeRouter = require('./home/homeRouter');
 const productRouter = require('./products/productRouter');
@@ -17,6 +17,7 @@ const charityRouter = require('./charities/charityRouter');
 const orderRouter = require('./orders/orderRouter');
 const userRouter = require('./users/userRouter');
 const searchRouter = require('./searchs/searchRouter');
+const { SafeString } = require('handlebars');
 
 const app = express();
 
@@ -25,9 +26,29 @@ port = process.env.PORT || 80
 // view engine setup
 app.engine('.hbs', handlebars.engine({
   extname: '.hbs',
+  helpers: {
+    for : (current, max) =>
+    {
+      let content = new SafeString('')
+      for(var i = 1; i <= max; i ++){
+        if(i === parseInt(current)){
+          content += new SafeString('<li class="page-item active">' +
+            `<a class="page-link" href="/menu/${i}">${i}</a>` +
+          '</li>')
+        }
+        else{
+          content += new SafeString('<li class="page-item ">' +
+            `<a class="page-link" href="/menu/${i}">${i}</a>` +
+          '</li>')
+        }
+      }
+      return content;
+    }
+  },
   runtimeOptions:{allowProtoPropertiesByDefault:true,
   allowedProtoMethodsByDefault:true}
 }));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs');
 
