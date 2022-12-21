@@ -1,55 +1,11 @@
-{{!-- <script src="/products/script.js">
-
-</script> --}}
-
  <script type="text/javascript">
-    function queryParameter(){
-      // http://localhost:3000/menu/explore?partner=&catalogue=&price=
-      const localURL = "http://localhost:80"
-      const hostURL = "https://eloop-user-hda.herokuapp.com"
-      const baseUrl = `${hostURL}/menu/explore?`
-      var partnerParam = "partner="
-      let catalogueParam = "catalogue="
-      let priceParam = "price="
-      let sortingParam = "sorting="
-  
-      //check partner list
-      let partnerList = document.getElementById("flush-collapseOne").getElementsByClassName("form-check-input")
-      for (let i = 0; i < partnerList.length; i++) {
-        if (partnerList[i].checked){
-          partnerParam += (partnerList[i].id).toString()
-        }
-      }
-      //check catalogue list
-      let catalogueList = document.getElementById("flush-collapseTwo").getElementsByClassName("form-check-input")
-      for (let i = 0; i < catalogueList.length; i++) {
-        if(catalogueList[i].checked){
-          catalogueParam += (catalogueList[i].id).toString()
-        }
-      }
-      //check price list
-      let priceList = document.getElementById("flush-collapseThree").getElementsByClassName("form-check-input")
-      for (let i = 0; i < priceList.length; i++) {
-        if (priceList[i].checked){
-          priceParam +=  (priceList[i].id).toString()
-        }
-      } 
-      //check sort list
-      let sortingList = document.getElementById("flush-collapseFour").getElementsByClassName("form-check-input")
-      for (let i = 0; i < sortingList.length; i++) {
-        if (sortingList[i].checked){
-          sortingParam +=  (sortingList[i].id).toString()
-        }
-      } 
-      
-      window.location= `${baseUrl}${partnerParam}&${catalogueParam}&${priceParam}&${sortingParam}`
-    }
  
 
  </script> 
  
 <div id="menu" class="container">
   {{!-- option-list : Start --}}
+  <form action="" method="get" id="menu-form"></form>
   <div class="col-3 option-list">
     <div class="accordion accordion-flush" >
       {{!-- option-partner : Start --}}
@@ -63,7 +19,7 @@
           <div class="accordion-body partner-list">
             {{#each partnerList}}
             <div class="form-check" >
-              <input  class="form-check-input" type="checkbox" name="partner" id="{{id}}" onclick="queryParameter()">
+              <input  class="form-check-input" type="checkbox" name="partner" id="{{id}}" form="menu-form" value="{{id}}">
               <label class="form-check-label" for="{{id}}" >
                 {{name}}
               </label>
@@ -85,7 +41,7 @@
           <div class="accordion-body">
             {{#each catalogueList}}
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="catalogue" id="{{id}}" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="catalogue" id="{{id}}" form="menu-form" value="{{id}}">
               <label class="form-check-label" for="{{id}}">
                 {{name}}
               </label>
@@ -107,19 +63,19 @@
           <div class="accordion-body partner-list">
             {{#if priceList}}
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="0,{{priceList.[0]}}" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="price" id="0,{{priceList.[0]}}" form="menu-form" value="0,{{priceList.[0]}}">
               <label class="form-check-label" for="{{priceList.[0]}}">
                0 - {{priceList.[0]}}
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="{{priceList.[0]}},{{priceList.[1]}}" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="price" id="{{priceList.[0]}},{{priceList.[1]}}"  form="menu-form" value="{{priceList.[0]}},{{priceList.[1]}}">
               <label class="form-check-label" for="{{priceList.[1]}}">
                 {{priceList.[0]}} - {{priceList.[1]}}
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="price" id="{{priceList.[1]}},{{priceList.[2]}}" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="price" id="{{priceList.[1]}},{{priceList.[2]}}"  form="menu-form" value="{{priceList.[1]}},{{priceList.[2]}}" >
               <label class="form-check-label" for="{{priceList.[2]}}">
                 {{priceList.[1]}} - {{priceList.[2]}}
               </label>
@@ -139,13 +95,13 @@
         <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" >
           <div class="accordion-body partner-list">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sorting" id="ASC" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="sorting" id="ASC" form="menu-form" value="ASC">
               <label class="form-check-label" for="ASC">
                 Tăng dần
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="sorting" id="DESC" onclick="queryParameter()">
+              <input class="form-check-input" type="radio" name="sorting" id="DESC" form="menu-form" value="DESC">
               <label class="form-check-label" for="DESC">
                 Giảm dần
               </label>
@@ -156,6 +112,7 @@
       {{!-- option-price : End --}}
 
     </div>
+    <input type="submit"  form="menu-form" value="Submit">
   </div>
   {{!-- product-list : Start --}}
   <div class="col-7" id="product">
@@ -164,7 +121,7 @@
       <img src="{{productImageUrl}}" alt="{{productName}}">
       {{!-- <a href="/menu/sss">sss</a> --}}
       <div class="product-body">
-        <a href="product/detail/{{id}}" class="product-title">
+        <a href="/product/detail/{{id}}" class="product-title">
           {{productName}}
         </a>
         <p class="product-price">
@@ -190,4 +147,19 @@
   <div class="col-2 sort-list"></div>
   
   {{!-- sort-list : End --}}
+  
+  {{!-- Pagination: End--}}
 </div>
+{{!-- -- Pagination: Start --}}
+<nav aria-label="..." id="menu-pagination">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="/menu/previous">Previous</a>
+    </li>
+    {{#for current pages}}
+    {{/for}}
+    <li class="page-item">
+      <a class="page-link"  href="/menu/next">Next</a>
+    </li>
+  </ul>
+ </nav>
