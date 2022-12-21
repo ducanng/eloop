@@ -81,7 +81,7 @@
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
               <!-- Profile Edit Form -->
-              <form method="POST">
+              <form method="POST" action="/user/info">
                 <div class="row mb-3">
                   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Hình đại diện</label>
                   <div class="col-md-8 col-lg-9">
@@ -110,7 +110,7 @@
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="phone" type="tel" class="form-control" id="Phone" value="" pattern="[0-9]{10}"
-                      title="Vui lòng nhập đúng số điện thoại" placeholder="{{phone}}">
+                      title="Vui lòng nhập đúng số điện thoại" placeholder="{{phone}}" maxlength="10">
                   </div>
                 </div>
                 <div class="text-center">

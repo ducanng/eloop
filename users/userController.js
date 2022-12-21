@@ -46,11 +46,12 @@ exports.showSignIn = (req, res, next) => {
 exports.signIn = async (req, res, next) => {
     const account = req.body.username;
     const password = req.body.password;
+    var redirectTo = req.session.redirectTo;
+
     const user = await exports.checkUserCredential(account, password);
     if (user) {
         req.login(user, function (err) {
             if (err) { return next(err); }
-            var redirectTo = req.session.redirectTo || '/';
             console.log('redirectTo: ' + redirectTo);
             // delete the session cookie so it is not present on the next request
             delete req.session.redirectTo;
@@ -65,7 +66,7 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
-    req.session.redirectTo = req.url;
+    req.session.redirectTo = req.originalUrl;
     console.log('redirectTo: ' + req.session.redirectTo);
     res.redirect('/user/signin');
 }
@@ -85,31 +86,35 @@ exports.checkUserCredential = async (account, password) => {
 
 exports.showInfo = async (req, res, next) => {
     const user = await findUser(req.user.username)
+    console.log('fullname1: ' + user);
     res.render('users/info', { user: user });
 }
 exports.updateInfo = async (req, res, next) => {
-    const fullname = req.body.name
-    const phonenumber = req.body.phone
-    const account = req.user.username
-    const address = req.body.address
+    let fullname = req.body.name
+    let phonenumber = req.body.phone
+    let account = req.user.username
+    let address = req.body.address
 
-    const user = findUser(account)
+    const user = await findUser(account)
+    
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
-        if (fullname === null) {
+        if (fullname === '') {
             fullname = user.name
         }
-        if (phonenumber === null) {
+        if (phonenumber === '') {
             phonenumber = user.phone_number
         }
-        if (address === null) {
+        if (address === '') {
             address = user.address
         }
-        if (updateInfoUser(account, fullname, address, phonenumber)) {
-            const user = { name: fullname, account: account, phone_number: phonenumber, address: address, number_product: user.number_product, number_charity: user.number_charity, number_recycles: user.number_recycles }
-            res.render('users/info', { success: 'Cập nhật thành công!', user: user });
-        } else {
-            res.render('users/info', { error: 'Cập nhật thất bại!', user: user });
-        }
+        if (fullname !== '' || phonenumber !== '' || address !== '') {
+            if (await updateInfoUser(account, fullname, address, phonenumber)) {
+                const info_user = { name: fullname, account: account, phone_number: phonenumber, address: address, number_product: user.number_product, number_charity: user.number_charity, number_recycles: user.number_recycles }
+                res.render('users/info', { success: 'Cập nhật thành công!', user: info_user });
+            } else {
+                res.render('users/info', { error: 'Cập nhật thất bại!', user: user });
+            }
+        }   
     }
 
 }
@@ -137,7 +142,7 @@ exports.changePassword = async (req, res, next) => {
         if (newPassword === reNewPassword) {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(newPassword, salt);
-            if (updatePasswordUser(account, hash)) {
+            if (await updatePasswordUser(account, hash)) {
                 res.render('users/info', { success: 'Đổi mật khẩu thành công!', user: user });
             } else {
                 res.render('users/info', { error: 'Đổi mật khẩu thất bại!', user: user });
