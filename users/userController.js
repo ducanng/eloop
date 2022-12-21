@@ -96,7 +96,7 @@ exports.updateInfo = async (req, res, next) => {
     let address = req.body.address
 
     const user = await findUser(account)
-    
+        
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
         if (fullname === '') {
             fullname = user.name
