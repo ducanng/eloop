@@ -17,6 +17,7 @@ const charityRouter = require('./charities/charityRouter');
 const orderRouter = require('./orders/orderRouter');
 const userRouter = require('./users/userRouter');
 const searchRouter = require('./searchs/searchRouter');
+const shoppingCartRouter = require('./payment/shoppingCartRouter');
 const { SafeString } = require('handlebars');
 
 const app = express();
@@ -84,7 +85,7 @@ app.use('/user', userRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
-
+app.use('/payment', shoppingCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
