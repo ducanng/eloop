@@ -1,0 +1,345 @@
+.shopping-cart {
+  color: #000;
+  overflow-x: hidden;
+  height: 60%;
+  
+  text-align: center;
+  background-color: #fff;
+  background-repeat: no-repeat;
+}
+
+#shopping-cart .plus-minus {
+  position: relative;
+}
+
+#shopping-cart .plus {
+  position: absolute;
+  top: -4px;
+  left: 2px;
+  cursor: pointer;
+}
+
+#shopping-cart .minus {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+  cursor: pointer;
+}
+
+#shopping-cart .vsm-text:hover {
+  color: #FF5252;
+}
+
+#shopping-cart .book, .book-img {
+  width: 120px;
+  height: 180px;
+  border-radius: 5px;
+}
+
+#shopping-cart .book {
+  margin: 20px 15px 5px 15px;
+}
+
+#shopping-cart .border-top {
+  border-top: 1px solid #EEEEEE !important;
+  margin-top: 20px;
+  padding-top: 15px;
+}
+
+#shopping-cart .card {
+  margin: 40px 0px;
+  padding: 40px 50px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 1px 5px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+#shopping-cart input, textarea {
+  background-color: #fff;
+  padding: 8px 15px 8px 15px;
+  width: 100%;
+  border-radius: 5px !important;
+  box-sizing: border-box;
+  border: 1px solid #F3E5F5;
+  font-size: 15px !important;
+  color: #000 !important;
+  font-weight: 300;
+}
+
+#shopping-cart input:focus, textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #9FA8DA;
+  outline-width: 0;
+  font-weight: 400;
+}
+
+#shopping-cart button:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline-width: 0;
+}
+
+#shopping-cart .pay {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #673AB7;
+  margin: 10px 20px 10px 0px;
+  cursor: pointer;
+  box-shadow: 1px 5px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+#shopping-cart .gray {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%);
+  color: #E0E0E0;
+}
+
+#shopping-cart .gray .pay {
+  box-shadow: none;
+}
+
+#tax {
+  border-top: 1px lightgray solid;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+#shopping-cart .btn-blue {
+  border: none;
+  border-radius: 10px;
+  background-color: #673AB7;
+  color: #fff;
+  padding: 8px 15px;
+  margin: 20px 0px;
+  cursor: pointer;
+}
+
+#shopping-cart .btn-blue:hover {
+  background-color: #311B92;
+  color: #fff;
+}
+
+#checkout {
+  float: left;
+}
+
+#check-amt {
+  float: right;
+}
+
+@media screen and (max-width: 768px) {
+  #shopping-cart .book, .book-img {
+    width: 100px;
+    height: 150px;
+  }
+  #shopping-cart .card {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  #shopping-cart .mob-text {
+    font-size: 13px;
+    
+  }
+  #shopping-cart .pad-left {
+    padding-left: 20px;
+  }
+}
+
+
+/* Part 2 */
+  
+  /* TABLES */
+  #shopping-cart .table {
+      border-collapse: separate;
+  }
+  #shopping-cart .table-hover > tbody > tr:hover > td,
+  #shopping-cart .table-hover > tbody > tr:hover > th {
+      background-color: #eee;
+  }
+  #shopping-cart .table thead > tr > th {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 0;
+  }
+  #shopping-cart .table tbody > tr > td {
+    font-size: 0.875em;
+    background: #fff;
+    border-top: 10px solid #fff;
+    vertical-align: middle;
+    padding: 12px 8px;
+  }
+  #shopping-cart .table tbody > tr > td:first-child,
+  #shopping-cart .table thead > tr > th:first-child {
+    padding-left: 20px;
+  }
+  #shopping-cart .table thead > tr > th span {
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+    padding: 0 5px;
+    padding-bottom: 5px;
+    font-weight: normal;
+  }
+  #shopping-cart .table thead > tr > th > a span {
+    color: #fff;
+  }
+  #shopping-cart .table thead > tr > th > a span:after {
+    content: "\f0dc";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    margin-left: 5px;
+    font-size: 0.75em;
+  }
+  #shopping-cart .table thead > tr > th > a.asc span:after {
+    content: "\f0dd";
+  }
+  #shopping-cart .table thead > tr > th > a.desc span:after {
+    content: "\f0de";
+  }
+  #shopping-cart .table thead > tr > th > a:hover span {
+    text-decoration: none;
+    color: #2bb6a3;
+    border-color: #2bb6a3;
+  }
+  #shopping-cart .table .table-hover tbody > tr > td {
+    -webkit-transition: background-color 0.15s ease-in-out 0s;
+    transition: background-color 0.15s ease-in-out 0s;
+  }
+  #shopping-cart .table tbody tr td .call-type {
+    display: block;
+    font-size: 0.75em;
+    text-align: center;
+  }
+  #shopping-cart .table tbody tr td .first-line {
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: 1.125em;
+  }
+  #shopping-cart .table tbody tr td .first-line span {
+    font-size: 0.875em;
+    color: #969696;
+    font-weight: 300;
+  }
+  #shopping-cart .table tbody tr td .second-line {
+    font-size: 0.875em;
+    line-height: 1.2;
+  }
+  #shopping-cart .table a .table-link {
+    margin: 0 5px;
+    font-size: 1.125em;
+  }
+  #shopping-cart .table a .table-link:hover {
+    text-decoration: none;
+    color: #2aa493;
+  }
+  #shopping-cart .table a .table-link.danger {
+    color: #fe635f;
+  }
+  #shopping-cart .table a .table-link.danger:hover {
+    color: #dd504c;
+  }
+  
+  #shopping-cart .table-products tbody > tr > td {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+    -webkit-transition: background-color 0.15s ease-in-out 0s;
+    transition: background-color 0.15s ease-in-out 0s;
+    position: relative;
+  }
+  #shopping-cart .table-products tbody > tr:hover > td {
+    text-decoration: none;
+    background-color: #f6f6f6;
+  }
+  #shopping-cart .table-products .name {
+    display: block;
+    font-weight: 600;
+    padding-bottom: 7px;
+  }
+  #shopping-cart .table-products .price {
+    display: block;
+    text-decoration: none;
+    width: 50%;
+    float: left;
+    font-size: 0.875em;
+  }
+  #shopping-cart .table-products .price > i {
+    color: #8dc859;
+  }
+  #shopping-cart .table-products .warranty {
+    display: block;
+    text-decoration: none;
+    width: 50%;
+    float: left;
+    font-size: 0.875em;
+  }
+  #shopping-cart .table-products .warranty > i {
+    color: #f1c40f;
+  }
+  #shopping-cart .table tbody > tr .table-line-fb > td {
+    background-color: #9daccb;
+    color: #262525;
+  }
+  #shopping-cart .table tbody > tr .table-line-twitter > td {
+    background-color: #9fccff;
+    color: #262525;
+  }
+  #shopping-cart .table tbody > tr .table-line-plus > td {
+    background-color: #eea59c;
+    color: #262525;
+  }
+  #shopping-cart .table-stats .status-social-icon {
+    font-size: 1.9em;
+    vertical-align: bottom;
+  }
+  #shopping-cart .table-stats .table-line-fb .status-social-icon {
+    color: #556484;
+  }
+  #shopping-cart .table-stats .table-line-twitter .status-social-icon {
+    color: #5885b8;
+  }
+  #shopping-cart .table-stats .table-line-plus .status-social-icon {
+    color: #a75d54;
+  }
+
+.remove_cart{
+  margin-top:0px;
+  font-size:30px
+}
+
+/* This CSS file is unnecessary if you are not using vertical buttons functionality */
+
+#shopping-cart .bootstrap-touchspin .input-group-btn-vertical {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  z-index: 11;
+}
+
+#shopping-cart .bootstrap-touchspin .input-group-btn-vertical > .btn {
+  position: absolute;
+  right: 0;
+  height: 50%;
+  padding: 0;
+  width: 2em;
+  text-align: center;
+  line-height: 1;
+}
+
+#shopping-cart .bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-up {
+  border-radius: 0 4px 0 0;
+  top: 0;
+}
+
+#shopping-cart .bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-down {
+  border-radius: 0 0 4px 0;
+  bottom: 0;
+}
+
