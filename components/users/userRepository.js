@@ -1,5 +1,5 @@
-const {user} = require("../models/user.js")
-const {sequelize} = require("../config/db.js")
+const {user} = require("../../models/user.js")
+const {sequelize} = require("../../config/db.js")
 async function findUser(account){
     const userInstance = await user.findOne({where : {account:account}})
     if (userInstance === null){

@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const userController = require('../users/userController.js');
+const userController = require('../components/users/userController.js');
 
 passport.use(new LocalStrategy(async function verify(username, password, cb) {
   const user = await userController.checkUserCredential(username, password);

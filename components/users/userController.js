@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
-const { user } = require("../models/user.js")
-const { findUser, addUser, removeUser, updateInfoUser, updateAccountUser, updatePasswordUser, findUserId } = require('../users/userRepository.js')
+const { user } = require("../../models/user.js")
+const { findUser, addUser, removeUser, updateInfoUser, updateAccountUser, updatePasswordUser, findUserId } = require('./userRepository.js')
 exports.showSignUp = (req, res, next) => {
     res.render('features/signup');
 }
@@ -154,5 +154,14 @@ exports.changePassword = async (req, res, next) => {
     else {
         res.render('users/info', { error: 'Mật khẩu hiện tại không đúng!', user: user });
     }
+}
 
+exports.checkAvailability = async (req, res, next) => {
+    const account = req.body.username;
+    const user = await findUser(account)
+    if (user) {
+        res.send(false);
+    } else {
+        res.send(true);
+    }
 }

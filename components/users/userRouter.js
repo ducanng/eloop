@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../config/passport');
-const userController = require('../users/userController');
+const passport = require('../../config/passport');
+const userController = require('./userController');
 
 //Register
 router.get('/signup', userController.showSignUp);
@@ -19,4 +19,5 @@ router.get('/info', userController.isLoggedIn, userController.showInfo);
 router.post('/info', userController.isLoggedIn, userController.updateInfo);
 
 router.post('/password', userController.isLoggedIn, userController.changePassword);
+router.post('/checkAvailability', userController.checkAvailability);
 module.exports = router;
