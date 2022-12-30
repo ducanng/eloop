@@ -38,6 +38,17 @@ async function findProduct(id){
   }
   return productInstance
 }
+// db.User.findAndCountAll({limit: req.query.limit, offset: req.skip})
+//       .then(results => {
+//         const itemCount = results.count;
+//         const pageCount = Math.ceil(results.count / req.query.limit);
+//         res.render('users/all_users', {
+//           users: results.rows,
+//           pageCount,
+//           itemCount,
+//           pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
+//         });
+//     }).catch(err => next(err))
 
 async function findRelativeProduct(id){
   const sizeRelativeProduct = 4

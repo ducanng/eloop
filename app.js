@@ -20,6 +20,14 @@ const searchRouter = require('./searchs/searchRouter');
 const shoppingCartRouter = require('./payment/shoppingCartRouter');
 const { SafeString } = require('handlebars');
 
+var paginate = require('handlebars-paginate');
+ 
+// var html = handlebars.template({pagination: {
+//   page: 3,
+//   pageCount: 10
+// }});
+ 
+
 const app = express();
 
 port = process.env.PORT || 80
@@ -28,27 +36,30 @@ port = process.env.PORT || 80
 app.engine('.hbs', handlebars.engine({
   extname: '.hbs',
   helpers: {
-    for : (current, max) =>
-    {
-      let content = new SafeString('')
-      for(var i = 1; i <= max; i ++){
-        if(i === parseInt(current)){
-          content += new SafeString('<li class="page-item active">' +
-            `<a class="page-link" href="/menu/${i}">${i}</a>` +
-          '</li>')
-        }
-        else{
-          content += new SafeString('<li class="page-item ">' +
-            `<a class="page-link" href="/menu/${i}">${i}</a>` +
-          '</li>')
-        }
-      }
-      return content;
-    }
+    // for : (current, max) =>
+    // {
+    //   let content = new SafeString('')
+    //   for(var i = 1; i <= max; i ++){
+    //     if(i === parseInt(current)){
+    //       content += new SafeString('<li class="page-item active">' +
+    //         `<a class="page-link" href="/menu/${i}">${i}</a>` +
+    //       '</li>')
+    //     }
+    //     else{
+    //       content += new SafeString('<li class="page-item ">' +
+    //         `<a class="page-link" href="/menu/${i}">${i}</a>` +
+    //       '</li>')
+    //     }
+    //   }
+    //   return content;
+    // },
+    paginate : (paginate) 
   },
+
   runtimeOptions:{allowProtoPropertiesByDefault:true,
   allowedProtoMethodsByDefault:true}
 }));
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs');
@@ -58,7 +69,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(paginate.middleware(10, 50));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -71,10 +82,14 @@ app.listen(port , () => {
   console.log("Express server listening on port http://localhost:%d in %s mode", port, app.settings.env);
 });
 //global.userLogined= true
+
 app.use(function (req, res, next) {
   res.locals.login = req.user;
   next();}
 );
+
+
+
 app.use('/', homeRouter);
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);
@@ -85,7 +100,7 @@ app.use('/user', userRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
-app.use('/shopping-cart', shoppingCartRouter);
+// app.use('/shopping-cart', shoppingCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

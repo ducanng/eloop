@@ -1,6 +1,52 @@
- <script type="text/javascript">
- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<script type="text/javascript">
+  function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+  $(document).ready(function(){
+    $("#filter").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#product div").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+      
+    });
+    
+    {{!-- var myProduct = $('#product');
+    var listproduct = myProduct.children('div').get();
+    var lengthListProduct = listproduct.length
+
+    var mypage = $('#pagination');
+    var listpage = mypage.children('li').get();
+    window.console.log(mypage.length)
+
+    var pre = listpage[0]
+    var next = listpage[listpage.length-1]
+    
+    var pageNum = listpage[1]
+
+
+    var tmpListPage = listpage.slice(1,lengthListProduct-1)
+ 
+    tmpListPage = tmpListPage.concat(next,pageNum,pre)
+    $.each(tmpListPage, function(idx, pre) { mypage.append(pre); });  --}}
+
+  });
+  function sortTable(){
+      var vals = document.getElementsByClassName('page-item').active
+    window.console.log(vals)
+  {{!-- window.console.log(listpage.findIndex(value:active)) --}}
+
+    var mylist = $('#pagination');
+    var listitems = mylist.children('li').get();
+    window.log(listitems.length)
+    {{!-- listitems.slice() --}}
+    {{!-- listitems..sort(function(a, b) {
+      return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+    })
+    $.each(listitems, function(idx, itm) { mylist.append(itm); }); --}}
+  }
+   
  </script> 
  
 <div id="menu" class="container">
@@ -110,8 +156,9 @@
         </div>
       </div>
       {{!-- option-price : End --}}
-
+      
     </div>
+    <input type="search" id="filter" form="menu-form" placeholder="Tìm kiếm sản phẩm.." >
     <input type="submit"  form="menu-form" value="Submit">
   </div>
   {{!-- product-list : Start --}}
@@ -151,7 +198,7 @@
   {{!-- Pagination: End--}}
 </div>
 {{!-- -- Pagination: Start --}}
-<nav aria-label="..." id="menu-pagination">
+{{!-- <nav aria-label="..." id="menu-pagination">
   <ul class="pagination">
     <li class="page-item">
       <a class="page-link" href="/menu/previous">Previous</a>
@@ -162,4 +209,23 @@
       <a class="page-link"  href="/menu/next">Next</a>
     </li>
   </ul>
+ </nav> --}}
+ <nav aria-label="..." >
+    <ul class="pagination pagination-centered" id="menu-pagination">
+        {{#paginate pagination type="first"}}
+        <li  {{#if disabled}}class="page-item disabled"{{/if}}><a class="page-link" href="?page={{n}}">First</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="previous"}}
+        <li {{#if disabled}}class="page-item disabled"{{/if}}><a class="page-link" href="?page={{n}}">Prev</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="middle" limit=pagination.pageCount}}
+        <li {{#if active}}class="page-item active"{{/if}}><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="next"}}
+        <li {{#if disabled}}class="page-item disabled"{{/if}}><a class="page-link" href="?page={{n}}">Next</a></li>
+        {{/paginate}}
+        {{#paginate pagination type="last"}}
+        <li {{#if disabled}}class="page-item disabled"{{/if}}><a class="page-link" href="?page={{n}}">Last</a></li>
+        {{/paginate}}
+    </ul>
  </nav>
