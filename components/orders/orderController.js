@@ -4,7 +4,7 @@ const {
   addSellProduct,
   removeSellProduct,
   getSellProductList,
-} = require('../models/sellProduct')
+} = require('../../models/sellProduct')
 exports.getSellProductList = async (req,res,next) =>{
     const userId = req.params.userId
  

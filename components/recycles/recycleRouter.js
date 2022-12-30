@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const recycleController = require('../recycles/recycleController')
+const recycleController = require('./recycleController')
 
 router.get('/', recycleController.getListRecycle);
 

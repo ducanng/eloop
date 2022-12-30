@@ -1,6 +1,6 @@
-const {searchProduct} = require('../models/product')
-const {partner,findPartner,addPartner,removePartner,getPartnerList} = require('../models/partner')
-const {catalogue,findCatalogue,addCatalogue,removeCatalogue,getCatalogueList} = require('../models/catalogue')
+const {searchProduct} = require('../../models/product')
+const {partner,findPartner,addPartner,removePartner,getPartnerList} = require('../../models/partner')
+const {catalogue,findCatalogue,addCatalogue,removeCatalogue,getCatalogueList} = require('../../models/catalogue')
 exports.findProductWithSearch = async (req,res,next) => {
     const key = req.body.searcher
     

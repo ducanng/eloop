@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const charityController = require('../charities/charityController')
+const charityController = require('./charityController')
 
 router.get('/', charityController.getListCharity);
 

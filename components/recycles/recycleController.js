@@ -1,4 +1,4 @@
-const {recycle,findRecycle,addRecycle,removeRecycle,getRecycleList} = require('../models/recycle')
+const {recycle,findRecycle,addRecycle,removeRecycle,getRecycleList} = require('../../models/recycle')
 
 exports.getListRecycle = async (req,res,next) =>{
 

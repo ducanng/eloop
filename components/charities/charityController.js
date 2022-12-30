@@ -1,4 +1,4 @@
-const {charity,findCharity,addCharity,removeCharity,getCharityList} = require('../models/charity')
+const {charity,findCharity,addCharity,removeCharity,getCharityList} = require('../../models/charity')
 
 exports.getListCharity = async (req,res,next) =>{
 

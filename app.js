@@ -7,17 +7,17 @@ const handlebars = require('express-handlebars')
 const session = require('express-session');
 const hbs = require('hbs');
 const passport = require('./config/passport');
-const homeRouter = require('./home/homeRouter');
-const productRouter = require('./products/productRouter');
-const detailRouter = require('./products/detailRouter');
+const homeRouter = require('./components/home/homeRouter');
+const productRouter = require('./components/products/productRouter');
+const detailRouter = require('./components/products/detailRouter');
 const usersRouter = require('./users/userRouter');
-const feedbackRouter = require('./feedback/feedbackRouter');
-const recycleRouter = require('./recycles/recycleRouter');
-const charityRouter = require('./charities/charityRouter');
-const orderRouter = require('./orders/orderRouter');
+const feedbackRouter = require('./components/feedback/feedbackRouter');
+const recycleRouter = require('./components/recycles/recycleRouter');
+const charityRouter = require('./components/charities/charityRouter');
+const orderRouter = require('./components/orders/orderRouter');
 const userRouter = require('./users/userRouter');
-const searchRouter = require('./searchs/searchRouter');
-const shoppingCartRouter = require('./payment/shoppingCartRouter');
+const searchRouter = require('./components/searchs/searchRouter');
+const shoppingCartRouter = require('./components/payment/shoppingCartRouter');
 const { SafeString } = require('handlebars');
 
 var paginate = require('handlebars-paginate');
@@ -100,7 +100,7 @@ app.use('/user', userRouter);
 app.use('/feedback', feedbackRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
-// app.use('/shopping-cart', shoppingCartRouter);
+app.use('/shopping-cart', shoppingCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
