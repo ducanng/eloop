@@ -6,6 +6,7 @@ const logger = require('morgan');
 const handlebars = require('express-handlebars')
 const session = require('express-session');
 const hbs = require('hbs');
+const flash = require('express-flash');
 const passport = require('./config/passport');
 const homeRouter = require('./components/home/homeRouter');
 const productRouter = require('./components/products/productRouter');
@@ -87,9 +88,7 @@ app.use(function (req, res, next) {
   res.locals.login = req.user;
   next();}
 );
-
-
-
+app.use(flash());
 app.use('/', homeRouter);
 app.use('/home', homeRouter);
 app.use('/menu',productRouter);

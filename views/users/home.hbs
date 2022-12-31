@@ -3,12 +3,18 @@
     window.onload = function () {
         window.console.log(`home ne `)
         sessionStorage.setItem("isLogin", true);
-        window.location = "https://eloop-user-hda.herokuapp.com/home"
+        window.location = "http://localhost/home" || "https://hda-team.herokuapp.com/home";
     }
-
 </script>
 {{/if }}
-
+{{!-- {{#if messages}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{messages.message}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/if}} --}}
 <div class="row">
     <div class="col-lg-12">
         <img class="img-fluid" src="/images/banner.jpg" alt="HDA TEAM" />

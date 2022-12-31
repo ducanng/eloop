@@ -19,5 +19,5 @@ router.get('/info', userController.isLoggedIn, userController.showInfo);
 router.post('/info', userController.isLoggedIn, userController.updateInfo);
 
 router.post('/password', userController.isLoggedIn, userController.changePassword);
-router.post('/checkAvailability', userController.checkAvailability);
+router.post('/signup/checkAvailability', userController.checkAvailability);
 module.exports = router;

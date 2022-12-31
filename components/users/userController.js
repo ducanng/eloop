@@ -32,6 +32,8 @@ exports.signUp = async (req, res, next) => {
         };
         req.login(user, function (err) {
             if (err) { return next(err); }
+            req.flash('message', 'Đăng ký thành công!');
+
             res.redirect('/');
         });
     } else {
@@ -50,6 +52,8 @@ exports.signIn = async (req, res, next) => {
 
     const user = await exports.checkUserCredential(account, password);
     if (user) {
+        req.flash('message', 'Đăng nhập thành công!');
+        console.log('User is exist!' + req);
         req.login(user, function (err) {
             if (err) { return next(err); }
             console.log('redirectTo: ' + redirectTo);
@@ -67,7 +71,6 @@ exports.isLoggedIn = (req, res, next) => {
         return next();
     }
     req.session.redirectTo = req.originalUrl;
-    console.log('redirectTo: ' + req.session.redirectTo);
     res.redirect('/user/signin');
 }
 /**
@@ -96,7 +99,7 @@ exports.updateInfo = async (req, res, next) => {
     let address = req.body.address
 
     const user = await findUser(account)
-        
+
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
         if (fullname === '') {
             fullname = user.name
@@ -114,7 +117,7 @@ exports.updateInfo = async (req, res, next) => {
             } else {
                 res.render('users/info', { error: 'Cập nhật thất bại!', user: user });
             }
-        }   
+        }
     }
 
 }
@@ -158,10 +161,15 @@ exports.changePassword = async (req, res, next) => {
 
 exports.checkAvailability = async (req, res, next) => {
     const account = req.body.username;
-    const user = await findUser(account)
-    if (user) {
-        res.send(false);
+    
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(account)) {
+        const user = await findUser(account)
+        if (user) {
+            res.send('false');
+        } else {
+            res.send('true');
+        }
     } else {
-        res.send(true);
+        res.send('notEmail');
     }
 }
