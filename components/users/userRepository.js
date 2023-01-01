@@ -48,13 +48,24 @@ async function findUser(account){
     }
   }
   async function updateInfoUser(account, name, address, phone_number) {
-    const userInstance = await user.update({
-      name: name, address: address, phone_number: phone_number},
-      {
-        where : {
-          account: account
-      }
-    })
+    let sqlUpdate = 'UPDATE users SET ';
+    if (name !== '') {
+      sqlUpdate += `name = "${name}"`;
+    }
+    if (address !== '') {
+      sqlUpdate += `, address = "${address}"`;
+    }
+    if (phone_number !== '') {
+      sqlUpdate += `, phone_number = "${phone_number}"`;
+    }
+    if (sqlUpdate === 'UPDATE users SET ') {
+      console.log('No data to update!');
+      return false;
+    }
+    sqlUpdate += ` WHERE account = "${account}"`;
+    
+    const userInstance = await sequelize.query(sqlUpdate, { type: sequelize.QueryTypes.UPDATE});
+
     if(userInstance === null){
       console.log('Updated failed!')
       return false

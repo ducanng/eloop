@@ -33,7 +33,6 @@ exports.signUp = async (req, res, next) => {
         req.login(user, function (err) {
             if (err) { return next(err); }
             req.flash('message', 'Đăng ký thành công!');
-
             res.redirect('/');
         });
     } else {
@@ -52,13 +51,13 @@ exports.signIn = async (req, res, next) => {
 
     const user = await exports.checkUserCredential(account, password);
     if (user) {
-        req.flash('message', 'Đăng nhập thành công!');
         console.log('User is exist!' + req);
         req.login(user, function (err) {
             if (err) { return next(err); }
             console.log('redirectTo: ' + redirectTo);
             // delete the session cookie so it is not present on the next request
             delete req.session.redirectTo;
+            req.flash('message', 'Đăng nhập thành công!');
             // redirecting the user to where they want to go
             res.redirect(redirectTo || '/');
         });
@@ -101,22 +100,10 @@ exports.updateInfo = async (req, res, next) => {
     const user = await findUser(account)
 
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
-        if (fullname === '') {
-            fullname = user.name
-        }
-        if (phonenumber === '') {
-            phonenumber = user.phone_number
-        }
-        if (address === '') {
-            address = user.address
-        }
-        if (fullname !== '' || phonenumber !== '' || address !== '') {
-            if (await updateInfoUser(account, fullname, address, phonenumber)) {
-                const info_user = { name: fullname, account: account, phone_number: phonenumber, address: address, number_product: user.number_product, number_charity: user.number_charity, number_recycles: user.number_recycles }
-                res.render('users/info', { success: 'Cập nhật thành công!', user: info_user });
-            } else {
-                res.render('users/info', { error: 'Cập nhật thất bại!', user: user });
-            }
+        if (await updateInfoUser(account, fullname, address, phonenumber)) {
+            res.send(`<script>alert("Cập nhật thông tin thành công!"); window.location.href = "${req.originalUrl}"; </script>`);
+        } else {
+            res.send(`<script>alert("Cập nhật thông tin thất bại"); window.location.href = "${req.originalUrl}"; </script>`);
         }
     }
 
@@ -161,7 +148,7 @@ exports.changePassword = async (req, res, next) => {
 
 exports.checkAvailability = async (req, res, next) => {
     const account = req.body.username;
-    
+
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(account)) {
         const user = await findUser(account)
         if (user) {

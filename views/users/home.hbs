@@ -7,14 +7,11 @@
     }
 </script>
 {{/if }}
-{{!-- {{#if messages}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{messages.message}}</strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}} --}}
+
+{{#if messages}}
+<input type="hidden" id="success" value="{{messages}}" />
+{{/if}}
+
 <div class="row">
     <div class="col-lg-12">
         <img class="img-fluid" src="/images/banner.jpg" alt="HDA TEAM" />
@@ -105,3 +102,11 @@
         </div>
     </div>
 </section>
+
+<script>
+    setTimeout(() => {
+        var success = document.getElementById("success").value;
+        console.log(success);
+        alert(success);
+    }, 1000);
+</script>
