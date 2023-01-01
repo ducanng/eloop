@@ -48,7 +48,10 @@ const user = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  
+  tokenResetPassword: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   // Other model options go here
 });

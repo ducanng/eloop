@@ -6,18 +6,21 @@ const userController = require('./userController');
 //Register
 router.get('/signup', userController.showSignUp);
 router.post('/signup', userController.signUp);
+//Check Availability
+router.post('/signup/checkAvailability', userController.checkAvailability);
 // Login
-
 router.get('/signin', userController.showSignIn);
 router.post('/signin', userController.signIn);
-
-//userController.signIn);
+//Logout
 router.get('/logout', userController.isLoggedIn, userController.logout);
-// router.post('/change_password', userController.postUserChangePassword)
-/* GET home page. */
+//Infomation
 router.get('/info', userController.isLoggedIn, userController.showInfo);
 router.post('/info', userController.isLoggedIn, userController.updateInfo);
-
 router.post('/password', userController.isLoggedIn, userController.changePassword);
-router.post('/signup/checkAvailability', userController.checkAvailability);
+//Forgot Password
+router.get('/forgot', userController.showForgotPassword);
+router.post('/forgot', userController.forgotPassword);
+
+router.get('/reset/:token', userController.showResetPassword);
+router.post('/reset/:token', userController.resetPassword);
 module.exports = router;

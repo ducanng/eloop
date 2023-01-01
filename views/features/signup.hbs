@@ -30,7 +30,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="username">E-Mail</label>
-                                <input id="username" type="email" class="form-control" name="username" value="{{email}}" required>
+                                <input id="username" type="email" class="form-control" name="username" value="{{email}}"
+                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$" required>
                                 <div class="invalid-feedback">
                                     Email không đúng định dạng
                                 </div>
@@ -38,17 +39,17 @@
 
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="password">Mật khẩu</label>
-                                <input id="password" type="password" class="form-control" name="password" minlength="6"
+                                <input id="password" type="password" class="form-control" name="password" minlength="4"
                                     oninput="checkPassword()" required>
                                 <div class="invalid-feedback">
-                                    Bắt buộc và ít nhất 6 kí tự
+                                    Bắt buộc và ít nhất 4 kí tự
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="confirm_password">Xác nhận mật khẩu</label>
                                 <input id="confirm_password" type="password" class="form-control" pattern="}"
-                                    name="confirm_password" oninput="checkPassword()" required>
+                                    name="confirm_password" oninput="checkPassword(4)" required>
                                 <div class="invalid-feedback" id="invalid-feedback">
                                     Bắt buộc
                                 </div>
@@ -77,22 +78,6 @@
 </section>
 
 <script type="text/javascript">
-    (function () {
-        'use strict'
-        //Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated');
-                }, false)
-            })
-    })()
     originalOnload = window.onload;
     window.onload = function ($) {
         if (originalOnload) {
@@ -133,38 +118,4 @@
             })
         })
     }(jQuery);
-
-    function checkPassword() {
-        var password = document.getElementById("password");
-        var confirm_password = document.getElementById("confirm_password");
-
-        document.addEventListener('submit', function (event) {
-            if (password.value !== confirm_password.value) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-        }, false);
-        if (password.value !== confirm_password.value) {
-            document.getElementsByClassName("invalid-feedback")[4].innerHTML = "Mật khẩu không khớp";
-            confirm_password.classList.add("is-invalid");
-            confirm_password.classList.add("text-danger");
-
-        } else {
-            confirm_password.classList.remove("text-danger");
-            confirm_password.classList.remove("is-invalid");
-            password.classList.add("is-valid");
-            confirm_password.classList.add("is-valid");
-        }
-    }
-    function showPassword() {
-        var x = document.getElementById("password");
-        var y = document.getElementById("confirm_password");
-        if (x.type === "password" && y.type === "password") {
-            x.type = "text";
-            y.type = "text";
-        } else {
-            x.type = "password";
-            y.type = "password";
-        }
-    }
 </script>

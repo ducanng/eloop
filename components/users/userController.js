@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const { user } = require("../../models/user.js")
-const { findUser, addUser, removeUser, updateInfoUser, updateAccountUser, updatePasswordUser, findUserId } = require('./userRepository.js')
+const mail = require('./mailForgotPassword.js')
+const sessionStorage = require('sessionstorage')
+const { findUser, addUser, updateInfoUser, updatePasswordUser
+    , updateTokenUser, findUserByToken } = require('./userRepository.js')
 exports.showSignUp = (req, res, next) => {
     res.render('features/signup');
 }
@@ -158,5 +162,73 @@ exports.checkAvailability = async (req, res, next) => {
         }
     } else {
         res.send('notEmail');
+    }
+}
+
+exports.showForgotPassword = (req, res, next) => {
+    res.render('features/forgotpass');
+}
+exports.forgotPassword = async (req, res, next) => {
+    const account = req.body.username;
+    const user = await findUser(account)
+    if (user) {
+        const token = await crypto.randomBytes(20).toString('hex');
+        console.log("Token: " + token);
+        console.log("Account: " + account);
+        if (await updateTokenUser(account, token)) {
+            await mail.mailForgotPassword(req.headers.host, account, token);
+            res.render('features/forgotpass', { success: 'Vui lòng kiểm tra email để đổi mật khẩu!' });
+        } else {
+            res.render('features/forgotpass', { error: 'Đổi mật khẩu thất bại!' });
+        }
+    } else {
+        res.render('features/forgotpass', { error: 'Tài khoản không tồn tại!' });
+    }
+}
+
+exports.showResetPassword = async (req, res, next) => {
+    const token = req.params.token;
+    const user = await findUserByToken(token)
+    sessionStorage.setItem('account', user.account);
+    if (user) {
+        res.render('features/resetpass', { token: token });
+    } else {
+        res.render('features/resetpass', { error: 'Đường dẫn không đúng!' });
+    }
+}
+
+exports.resetPassword = async (req, res, next) => {
+    const password = req.body.password;
+    const rePassword = req.body.confirm_password;
+    let account = sessionStorage.getItem('account');
+    let flag = false;
+    if (account) {
+        flag = true
+    } else {
+        const token = req.params.token;
+        const user = await findUserByToken(token)
+        account = user.account;
+        if (user) {
+            flag = true
+        } else {
+            flag = false
+        }
+    }
+    console.log(flag);
+    if (flag) {
+        if (password === rePassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(password, salt);
+            if (await updatePasswordUser(account, hash)) {
+                await updateTokenUser(account, null);
+                res.render('features/resetpass', { success: 'Đổi mật khẩu thành công!' });
+            } else {
+                res.render('features/resetpass', { error: 'Đổi mật khẩu thất bại!' });
+            }
+        } else {
+            res.render('features/resetpass', { error: 'Mật khẩu không khớp!' });
+        }
+    } else {
+        res.render('features/resetpass', { error: 'Đường dẫn không đúng!' });
     }
 }

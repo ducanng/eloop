@@ -94,6 +94,55 @@
         validateEmail(emailId)
       }
     }
+    (function () {
+        'use strict'
+        //Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated');
+                }, false)
+            })
+    })()
+    function checkPassword(i) {
+        var password = document.getElementById("password");
+        var confirm_password = document.getElementById("confirm_password");
+
+        document.addEventListener('submit', function (event) {
+            if (password.value !== confirm_password.value) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+        }, false);
+        if (password.value !== confirm_password.value) {
+            document.getElementsByClassName("invalid-feedback")[i].innerHTML = "Mật khẩu không khớp";
+            confirm_password.classList.add("is-invalid");
+            confirm_password.classList.add("text-danger");
+
+        } else {
+            confirm_password.classList.remove("text-danger");
+            confirm_password.classList.remove("is-invalid");
+            password.classList.add("is-valid");
+            confirm_password.classList.add("is-valid");
+        }
+    }
+    function showPassword() {
+        var x = document.getElementById("password");
+        var y = document.getElementById("confirm_password");
+        if (x.type === "password" && y.type === "password") {
+            x.type = "text";
+            y.type = "text";
+        } else {
+            x.type = "password";
+            y.type = "password";
+        }
+    }
   </script>
   {{!--
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
