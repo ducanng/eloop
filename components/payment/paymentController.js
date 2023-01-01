@@ -1,4 +1,4 @@
-const {sellProduct,findSellProduct,addSellProduct,addProductCart,removeSellProduct,removeProductCart,getSellProductList,getShoppingCartList} = require('../models/sellProduct')
+const {sellProduct,findSellProduct,addSellProduct,addProductCart,removeSellProduct,removeProductCart,getSellProductList,getShoppingCartList} = require('../../models/sellProduct.js')
 
 var sessionStorage = require('sessionstorage');
 exports.getShoppingCartList = async (req,res,next) =>{
