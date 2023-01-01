@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
+const shoppingCartController = require('../payment/paymentController')
 
-/* GET users listing. */
+// router.get('/', shoppingCartController.getShoppingCartList);
+// router.post('/:id', shoppingCartController.addToCart);
+// router.post('remove/:id', shoppingCartController.removeOutCart);
 router.get('/', function(req, res, next) {
-      console.log("jjjj");
+      
   res.render('users/shopping-cart');
 });
 
