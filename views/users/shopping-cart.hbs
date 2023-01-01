@@ -1,213 +1,159 @@
 <div class ="shopping-cart" id="shopping-cart">
       <div class="container px-4 py-5 mx-auto">
-            <div class="row d-flex justify-content-center">
-                  <div class="col-5">
-                        <h4 class="heading">Shopping Bag</h4>
-                  </div>
-                  
-            </div>
-            <div class="row d-flex justify-content-center">
-                   <div class="col-5">
-                        <div class="row text-right">
-                              <div class="col-4">
-                                    <h6 class="mt-2">Image</h6>
-                              </div>
-                              <div class="col-8">
-                                    <h6 class="td-qty">Product Name</h6>
-                              </div>
-                              
+            <div class="card" style="width: 100%;">
+                  <div class="row d-block justify-content-center">
+                        <div class="col-5">
+                              <h4 class="heading">Shopping Bag</h4>
                         </div>
+                        
                   </div>
-                  <div class="col-7">
-                        <div class="row text-right">
-                              
-                              <div class="col-4">
-                                    <h6 class="td-qty">Quantity</h6>
-                              </div>
-                              <div class="col-4">
-                                    <h6 class="mt-2">Price</h6>
-                              </div>
-                              <div class="col-4">
-                                    <h6 class="mt-2">Remove</h6>
+                  <div class="row d-flex justify-content-center">
+                        <div class="col-6">
+                              <div class="row text-center">
+                                    <div class="col-4">
+                                          <h6 class="mt-4">Image</h6>
+                                    </div>
+                                    <div class="mt-4 col-8">
+                                          <h6 class="td-qty">Product Name</h6>
+                                    </div>
+                                    
                               </div>
                         </div>
+                        <div class="col-6">
+                              <div class="row text-right">
+                                    
+                                    <div class="mt-4 col-4">
+                                          <h6 class="td-qty">Quantity</h6>
+                                    </div>
+                                    <div class="mt-4 col-4">
+                                          <h6 class="">Price</h6>
+                                    </div>
+                                    <div class="mt-4 col-4">
+                                          <h6 class="">Remove</h6>
+                                    </div>
+                              </div>
+                        </div>
                   </div>
-            </div>
 
-            <div class="row d-flex justify-content-center border-top">
-                  <div class="my-auto col-5 text-right">
-                        <div class="row d-flex">
-                              <div class="book">
-                                    <img src="https://i.imgur.com/2DsA49b.jpg" class="book-img">
-                              </div>
-                              <div class="my-auto flex-column d-flex pad-left col-8" style="margin-left: 30px;">
-                                    <h6 class="mob-text" >Thinking, Fast and Slow</h6>
-                                    <p class="mob-text">Daniel Kahneman</p>
-                              </div>
-                              
-                        </div>
-                  </div>
-                  <div class="my-auto col-7">
-                        <div class="row d-flex text-right">
-                              
-                              <div class="col-4">                                                                         
-                                    <div class="qty-btn d-flex ">                                          
-                                          <div class="quantity d-flex" style="margin-left:60px" >
-                                                <span class="qty-minus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true" style="margin-top:0px; margin-right:10px"></i></span>
-                                                <input type="number" class="qty-text form-control text-center" id="qty3" step="1" min="1" max="300" name="quantity" value="1" style="margin-top: -10px;">
-                                                <span class="qty-plus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true" style="margin-top:0px; margin-left:10px"></i></span>
-                                          </div>
+                  <div class="row d-flex justify-content-center border-top">
+                        {{#each sellProductList}}
+                        <div class="my-auto col-6 text-right">
+                              <div class="row d-flex">
+                                    <div class="book">
+                                          <img src="{{productImageUrl}}" class="book-img">
+                                          {{!-- <img src="https://i.imgur.com/2DsA49b.jpg" class="book-img"> --}}
                                     </div>
-                                                                 
-                              </div>
-                              <div class="col-4">
-                                    <h6 class="mob-text" style="margin-top: 0px;">$9.99</h6>
-                              </div>
-                              <div class="col-4">                                   
-                                    <a href="#" class="remove_cart" rel="1" >
-                                          <i class="fa fa-trash-o"></i>
-                                    </a>                                                                       
+                                    <div class="my-auto flex-column d-flex pad-left col-6" style="margin-left: 90px;">
+                                          {{!-- <h6 class="mob-text" >Thinking, Fast and Slow</h6>
+                                          <p class="mob-text">Daniel Kahneman</p> --}}
+                                          <a href="product/detail/{{id}}" class="product-title">
+                                                {{productName}}
+                                          </a>
+                                    </div>
+                                    
                               </div>
                         </div>
+                        <div class="my-auto col-6">
+                              <div class="row d-flex text-right">
+                                    
+                                    <div class="col-4">                                                                         
+                                          <div class="qty-btn d-flex ">                                          
+                                                <div class="quantity d-flex" style="margin-left:-25px" >
+                                                      <span class="qty-minus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true" style="margin-top:0px; margin-right:10px"></i></span>
+                                                      <input type="number" class="qty-text form-control text-center" id="qty3" step="1" min="1" max="300" name="quantity" value="1" style="margin-top: -10px;">
+                                                      <span class="qty-plus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true" style="margin-top:0px; margin-left:10px"></i></span>
+                                                </div>
+                                          </div>
+                                                                  
+                                    </div>
+                                    <div class="col-4">
+                                          <h6 class="mob-text" style="margin-top: 0px;">{{price}}đ</h6>
+                                    </div>
+                                    <div class="col-4">                                   
+                                          <a href="#" class="remove_cart" rel="1" >
+                                                <i class="fa fa-trash-o fa-2xl"></i>
+                                          </a>                                                                       
+                                    </div>
+                              </div>
+                        </div>
+                        {{/each}}
                   </div>
-            </div>
 
-            {{!-- <div class="row d-flex justify-content-center border-top" id="">
-                  <div class="col-5">
-                        <div class="row d-flex">
-                        <div class="book">
-                              <img src="https://i.imgur.com/Oj1iQUX.jpg" class="book-img">
-                        </div>
-                        <div class="my-auto flex-column d-flex pad-left">
-                              <h6 class="mob-text">Homo Deus: A Brief<br>History of Tomorrow</h6>
-                              <p class="mob-text">Yuval Noah Harari</p>
-                        </div>
-                        </div>
-                  </div>
-                  <div class="my-auto col-7">
-                        <div class="row text-right">
-                        <div class="col-4">
-                              <p class="mob-text">Paperback</p>
-                        </div>
-                        <div class="col-4">
-                              <div class="row d-flex justify-content-end px-3">
-                                    <p class="mb-0" id="cnt2">1</p>
-                                    <div class="d-flex flex-column plus-minus">
-                                    <span class="vsm-text plus">+</span>
-                                    <span class="vsm-text minus">-</span>
-                                    </div>
-                              </div>
-                        </div>
-                        <div class="col-4">
-                              <h6 class="mob-text">$13.50</h6>
-                        </div>
-                        </div>
-                  </div>
-            </div> --}}
-
-            <div class="row justify-content-center" id="shopping-cart">
-                  <div class="col-lg-12" >
-                        <div class="card">
-                              <div class="row">
-                                    <div class="col-lg-3 radio-group">
-                                          <div class="row d-flex px-3 radio">
-                                                <img class="pay" src="https://i.imgur.com/WIAP9Ku.jpg">
-                                                <p class="my-auto">Credit Card</p>
-                                          </div>
-                                          <div class="row d-flex px-3 radio gray">
-                                                <img class="pay" src="https://i.imgur.com/OdxcctP.jpg">
-                                                <p class="my-auto">Debit Card</p>
-                                          </div>
-                                          <div class="row d-flex px-3 radio gray mb-3">
-                                                <img class="pay" src="https://i.imgur.com/cMk1MtK.jpg">
-                                                <p class="my-auto">PayPal</p>
-                                          </div>
-                                    </div>
-                                    <div class="col-lg-5">
-                                          <div class="row px-2">
-                                                <div class="form-group col-md-6">
-                                                      <label class="form-control-label">Name on Card</label>
-                                                      <input type="text" id="cname" name="cname" placeholder="Johnny Doe">
+                  <div class="row justify-content-center" id="shopping-cart">
+                        <div class="col-lg-12" >
+                              <div class="card">
+                                    <div class="row">
+                                          <div class="col-lg-3 radio-group">
+                                                <div class="row d-flex px-3 radio">
+                                                      <img class="pay" src="https://i.imgur.com/WIAP9Ku.jpg">
+                                                      <p class="my-auto">Credit Card</p>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                      <label class="form-control-label">Card Number</label>
-                                                      <input type="text" id="cnum" name="cnum" placeholder="1111 2222 3333 4444">
+                                                <div class="row d-flex px-3 radio gray">
+                                                      <img class="pay" src="https://i.imgur.com/OdxcctP.jpg">
+                                                      <p class="my-auto">Debit Card</p>
+                                                </div>
+                                                <div class="row d-flex px-3 radio gray mb-3">
+                                                      <img class="pay" src="https://i.imgur.com/cMk1MtK.jpg">
+                                                      <p class="my-auto">PayPal</p>
                                                 </div>
                                           </div>
-                                          <div class="row px-2">
-                                                <div class="form-group col-md-6">
-                                                      <label class="form-control-label">Expiration Date</label>
-                                                      <input type="text" id="exp" name="exp" placeholder="MM/YYYY">
+                                          <div class="col-lg-5">
+                                                <div class="row px-2">
+                                                      <div class="form-group col-md-6">
+                                                            <label class="form-control-label">Name on Card</label>
+                                                            <input type="text" id="cname" name="cname" placeholder="Card Holder">
+                                                      </div>
+                                                      <div class="form-group col-md-6">
+                                                            <label class="form-control-label">Card Number</label>
+                                                            <input type="text" id="cnum" name="cnum" placeholder="xxxx xxxx xxxx xxxx">
+                                                      </div>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                      <label class="form-control-label">CVV</label>
-                                                      <input type="text" id="cvv" name="cvv" placeholder="***">
+                                                <div class="row px-2">
+                                                      <div class="form-group col-md-6">
+                                                            <label class="form-control-label">Expiration Date</label>
+                                                            <input type="text" id="exp" name="exp" placeholder="MM/YYYY">
+                                                      </div>
+                                                      <div class="form-group col-md-6">
+                                                            <label class="form-control-label">CVV</label>
+                                                            <input type="text" id="cvv" name="cvv" placeholder="***">
+                                                      </div>
                                                 </div>
                                           </div>
-                                    </div>
-                                    <div class="col-lg-4 mt-2">
-                                          <div class="row d-flex justify-content-between px-4">
-                                                <p class="mb-1 text-left">Subtotal</p>
-                                                <h6 class="mb-1 text-right">$23.49</h6>
+                                          <div class="col-lg-4 mt-2">
+                                                <div class="row d-flex justify-content-between px-4">
+                                                      <p class="mb-1 text-left">Subtotal</p>
+                                                      <h6 class="mb-1 text-right">$23.49</h6>
+                                                </div>
+                                                <div class="row d-flex justify-content-between px-4">
+                                                      <p class="mb-1 text-left">Shipping</p>
+                                                      <h6 class="mb-1 text-right">$2.99</h6>
+                                                </div>
+                                                <div class="row d-flex justify-content-between px-4" id="tax">
+                                                      <p class="mb-1 text-left">Total (tax included)</p>
+                                                      <h6 class="mb-1 text-right">$26.48</h6>
+                                                </div>
+                                                <button class="btn-block btn-blue">
+                                                      <span>
+                                                            <span id="checkout">Checkout</span>
+                                                            <span id="check-amt">$26.48</span>
+                                                      </span>
+                                                </button>
                                           </div>
-                                          <div class="row d-flex justify-content-between px-4">
-                                                <p class="mb-1 text-left">Shipping</p>
-                                                <h6 class="mb-1 text-right">$2.99</h6>
-                                          </div>
-                                          <div class="row d-flex justify-content-between px-4" id="tax">
-                                                <p class="mb-1 text-left">Total (tax included)</p>
-                                                <h6 class="mb-1 text-right">$26.48</h6>
-                                          </div>
-                                          <button class="btn-block btn-blue">
-                                                <span>
-                                                      <span id="checkout">Checkout</span>
-                                                      <span id="check-amt">$26.48</span>
-                                                </span>
-                                          </button>
                                     </div>
                               </div>
                         </div>
                   </div>
-            </div>
-      </div>
+                  <div class="btn-group btns-cart">
+                        <button type="button" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</button>
+                        <button type="button" class="btn btn-light">Update Cart</button>
+                        <button type="button" class="btn btn-light">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+                  </div>
+            </div>         
+      </div>      
 </div>
 
-    <!-- Cart -->
-    <div class="col-lg-9 col-md-9 col-sm-12">
-       
-        <div class="col-lg-3 col-sm-3 hero-feature">
-            <div class="table-responsive">
-                <table class="table table-bordered tbl-cart">
-                    <thead>
-                        <tr>                           
-                            <td class="td-qty">Quantity</td>                           
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>                                                     
-                            <td>
-                                <div class="input-group bootstrap-touchspin"><span class="input-group-btn"><button class="btn btn-default bootstrap-touchspin-down" type="button">-</button></span><span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span><input type="text" name="" value="1" class="input-qty form-control text-center" style="display: block;"><span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span><span class="input-group-btn"><button class="btn btn-default bootstrap-touchspin-up" type="button">+</button></span></div>
-                            </td>                                            
-                        </tr>
-                        <tr>
-                                                       
-                            <td>
-                                <div class="input-group bootstrap-touchspin"><span class="input-group-btn"><button class="btn btn-default bootstrap-touchspin-down" type="button">-</button></span><span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span><input type="text" name="" value="2" class="input-qty form-control text-center" style="display: block;"><span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span><span class="input-group-btn"><button class="btn btn-default bootstrap-touchspin-up" type="button">+</button></span></div>
-                            </td>                         
-                        </tr>                        
-                    </tbody>
-                </table>
-            </div>
-            
-
-        </div>
-    </div>
-    <!-- End Cart -->
-    <div class="btn-group btns-cart">
-                <button type="button" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i> Continue Shopping</button>
-                <button type="button" class="btn btn-primary">Update Cart</button>
-                <button type="button" class="btn btn-primary">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-            </div>
+    
+     
 
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>

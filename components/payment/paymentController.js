@@ -1,13 +1,38 @@
-const {product,findProduct,addProduct,removeProduct,getProductList,findRelativeProduct,getPriceList} = require('../models/product')
-const {partner,findPartner,addPartner,removePartner,getPartnerList} = require('../models/partner')
-const {catalogue,findCatalogue,addCatalogue,removeCatalogue,getCatalogueList} = require('../models/catalogue')
+const {sellProduct,findSellProduct,addSellProduct,addProductCart,removeSellProduct,removeProductCart,getSellProductList,getShoppingCartList} = require('../models/sellProduct')
 
 var sessionStorage = require('sessionstorage');
-exports.addToCart = async (req,res,next) =>{
-      const productId = req.params.id
-      if(productId !== undefined){
-            const product = await findProduct(productId);
-            
-            res.render('users/shopping-cart',{product:product})
-      }
-}
+exports.getShoppingCartList = async (req,res,next) =>{
+      const userId = req.params.userId
+   
+      const sellProductList = await getShoppingCartList(1)
+      console.log(sellProductList.length);
+   
+      res.render('users/shopping-cart',{sellProductList :sellProductList})
+  }
+// exports.addToCart = async (req,res,next) =>{
+//       const productId = req.params.id
+//       console.log("Product id:")
+//       console.log(productId);
+      
+//       await addProductCart(global.userLoginId,productId)
+//       res.redirect('/menu')
+// }
+
+// exports.removeOutCart = async (req,res,next) =>{
+//       const productId = req.params.id
+//       console.log("Product ID:")
+//       console.log(productId)
+      
+      
+//       if(productId !== undefined){
+         
+//           console.log("............................................")
+//           await removeProductCart(productId);
+          
+//           const userId = req.params.userId;     
+   
+//           const sellProductList = await getShoppingCartList(1);
+//           res.render('users/shopping-cart',{sellProductList :sellProductList})
+//       }
+//       //res.render('admins/product')
+//   }

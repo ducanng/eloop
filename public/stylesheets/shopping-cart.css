@@ -53,7 +53,7 @@
 }
 
 #shopping-cart input, textarea {
-  background-color: #F3E5F5;
+  background-color: #FFF;
   padding: 8px 15px 8px 15px;
   width: 100%;
   border-radius: 5px !important;
@@ -124,6 +124,8 @@
   color: #fff;
 }
 
+
+
 #checkout {
   float: left;
 }
@@ -133,18 +135,18 @@
 }
 
 @media screen and (max-width: 768px) {
-  .book, .book-img {
+  #shopping-cart .book, .book-img {
     width: 100px;
     height: 150px;
   }
-  .card {
+  #shopping-cart .card {
     padding-left: 15px;
     padding-right: 15px;
   }
-  .mob-text {
+  #shopping-cart .mob-text {
     font-size: 13px;
   }
-  .pad-left {
+  #shopping-cart .pad-left {
     padding-left: 20px;
   }
 }
