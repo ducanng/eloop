@@ -174,16 +174,16 @@
         <p class="product-price">
           {{price}}đ
         </p>
-        {{!-- <form action="/order/{{id}}" method="post"> --}}
+        <form action="/shopping-cart/{{id}}" method="post">
           <button class="learn-more">
-            <a href="/shopping-cart">
+            <a href="#">
                 <span class="circle" aria-hidden="true">
                     <span class="icon arrow"></span>
                 </span>
                 <span class="button-text">Mua</span>
             </a>
           </button>
-        {{!-- </form> --}}
+        </form>
       </div>
     </div>
     {{/each}}
