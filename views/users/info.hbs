@@ -4,7 +4,6 @@
     <h1>{{success}}</h1>
   </strong>
 </div>
-
 <script>
   setTimeout(() => {
     $("#success-alert").alert('close');
@@ -226,7 +225,6 @@
 {{/with}}
 
 <script>
-
   function checkPass() {
     var pass1 = document.getElementById('newPassword');
     var pass2 = document.getElementById('renewPassword');
@@ -250,17 +248,6 @@
       submit.classList.remove("btn-success");
       submit.classList.add("btn-danger");
       submit.disabled = true;
-    }
-  }
-  function showPassword() {
-    var x = document.getElementById("newPassword");
-    var y = document.getElementById("renewPassword");
-    if (x.type === "password" && y.type === "password") {
-      x.type = "text";
-      y.type = "text";
-    } else {
-      x.type = "password";
-      y.type = "password";
     }
   }
 </script>

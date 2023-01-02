@@ -11,7 +11,7 @@ passport.use(new LocalStrategy(async function verify(username, password, cb) {
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
-    cb(null, { id: user.id, name: user.name, username: user.account});
+    cb(null, { id: user.id, name: user.name, username: user.account, verify: user.verify});
   });
 });
 

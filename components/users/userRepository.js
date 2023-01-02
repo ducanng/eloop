@@ -35,7 +35,7 @@ async function findUserByToken(token) {
 async function addUser(name, account, password, phone_number) {
   const existUser = await findUser(account)
   if (existUser === null) {
-    const userInstance = user.create({ name: name, account: account, password: password, phone_number: phone_number, status: 0 })
+    const userInstance = user.create({ name: name, account: account, password: password, phone_number: phone_number})
     console.log('User is added!')
     return true
   }
@@ -63,10 +63,16 @@ async function updateInfoUser(account, name, address, phone_number) {
     sqlUpdate += `name = "${name}"`;
   }
   if (address !== '') {
-    sqlUpdate += `, address = "${address}"`;
+    if (name !== '') {
+      sqlUpdate += ', ';
+    }
+    sqlUpdate += `address = "${address}"`;
   }
   if (phone_number !== '') {
-    sqlUpdate += `, phone_number = "${phone_number}"`;
+    if (name !== '' || address !== '') {
+      sqlUpdate += ', ';
+    }
+    sqlUpdate += `phone_number = "${phone_number}"`;
   }
   if (sqlUpdate === 'UPDATE users SET ') {
     console.log('No data to update!');
@@ -142,6 +148,18 @@ async function updateTokenUser(account, token) {
 // removeUser('huyhoang')
 // addUser('hu','test','123')
 // updateUser('hu','hh','12345')
+async function updateVerifyUser(account, verify) {
+  const userInstance = await user.update({verify: verify, token: null}, {
+      where: {account: account}})
+  if (userInstance === null) {
+    console.log('User is not exist!')
+    return false;
+  }
+  else {
+    console.log('User is updated status!')
+    return true;
+  }
+}
 
 module.exports = { findUser, addUser, removeUser, updateInfoUser, updateAccountUser,
-   updatePasswordUser, findUserId, updateTokenUser, findUserByToken}
+   updatePasswordUser, findUserId, updateTokenUser, findUserByToken, updateVerifyUser}

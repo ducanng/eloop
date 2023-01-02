@@ -1,10 +1,11 @@
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const { user } = require("../../models/user.js")
-const mail = require('./mailForgotPassword.js')
+const sendForgotPassword = require('./mailForgotPassword.js')
+const sendVerifyMail = require('./mailVerifyEmail')
 const sessionStorage = require('sessionstorage')
 const { findUser, addUser, updateInfoUser, updatePasswordUser
-    , updateTokenUser, findUserByToken } = require('./userRepository.js')
+    , updateTokenUser, findUserByToken, updateVerifyUser } = require('./userRepository.js')
 exports.showSignUp = (req, res, next) => {
     res.render('features/signup');
 }
@@ -33,11 +34,12 @@ exports.signUp = async (req, res, next) => {
         var user = {
             name: fullname,
             account: account,
+            verify: 'not'
         };
         req.login(user, function (err) {
             if (err) { return next(err); }
             req.flash('message', 'Đăng ký thành công!');
-            res.redirect('/');
+            res.redirect('/user/verify');
         });
     } else {
         console.log('User is not added!')
@@ -55,6 +57,7 @@ exports.signIn = async (req, res, next) => {
 
     const user = await exports.checkUserCredential(account, password);
     if (user) {
+        sessionStorage.setItem('full_user', user);
         console.log('User is exist!' + req);
         req.login(user, function (err) {
             if (err) { return next(err); }
@@ -71,7 +74,13 @@ exports.signIn = async (req, res, next) => {
 }
 exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
-        return next();
+        if (req.user.verify === 'done') {
+            return next();
+        } 
+        if (req.user.verify === 'not') {
+            res.redirect('/user/verify');
+        }
+
     }
     req.session.redirectTo = req.originalUrl;
     res.redirect('/user/signin');
@@ -176,7 +185,7 @@ exports.forgotPassword = async (req, res, next) => {
         console.log("Token: " + token);
         console.log("Account: " + account);
         if (await updateTokenUser(account, token)) {
-            await mail.mailForgotPassword(req.headers.host, account, token);
+            await sendForgotPassword.mailForgotPassword(req.headers.host, account, token);
             res.render('features/forgotpass', { success: 'Vui lòng kiểm tra email để đổi mật khẩu!' });
         } else {
             res.render('features/forgotpass', { error: 'Đổi mật khẩu thất bại!' });
@@ -230,5 +239,49 @@ exports.resetPassword = async (req, res, next) => {
         }
     } else {
         res.render('features/resetpass', { error: 'Đường dẫn không đúng!' });
+    }
+}
+
+exports.showVerifyEmail = async (req, res, next) => {
+    res.render('features/verifyemail', {mess : 'Chào mừng!'});
+}
+exports.sendMail = async (req, res, next) => {
+    let account = req.user.username;
+    if (account === undefined) {
+        const full_user = sessionStorage.getItem('full_user');
+        account = full_user.account;
+    }
+
+    const user = await findUser(account)
+    if (user) {
+        if (user.verify === 'not') {
+            const token = await crypto.randomBytes(20).toString('hex');
+            console.log("Token: " + token);
+            console.log("Account: " + account);
+            if (await updateTokenUser(account, token)) {
+                await sendVerifyMail.mailVerifyEmail(req.headers.host, account, token);
+                res.render('features/verifyemail', { mess: 'Vui lòng kiểm tra email để xác thực tài khoản!' });
+            } else {
+                res.render('features/verifyemail', { mess: 'Xác thực tài khoản thất bại!' });
+            }
+        } else {
+            res.render('features/verifyemail', { mess: 'Tài khoản đã được xác thực!' });
+        }
+    } else {
+        res.render('features/verifyemail', { mess: 'Tài khoản không tồn tại!' });
+    }
+}
+
+exports.verifyEmail = async (req, res, next) => {
+    const token = req.params.token;
+    const user = await findUserByToken(token)
+    if (user) {
+        if (await updateVerifyUser(user.account, 'done')) {
+            res.render('features/verifyemail', { mess: 'Xác thực tài khoản thành công!' });
+        } else {
+            res.render('features/verifyemail', { mess: 'Xác thực tài khoản thất bại!' });
+        }
+    } else {
+        res.render('features/verifyemail', { mess: 'Đường dẫn không đúng!' });
     }
 }
