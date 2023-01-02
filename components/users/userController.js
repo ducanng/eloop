@@ -49,8 +49,10 @@ exports.showSignIn = (req, res, next) => {
     res.render('features/signin');
 }
 exports.signIn = async (req, res, next) => {
-    const account = req.body.username;
-    const password = req.body.password;
+    const account = "dtest123@gmail.com";
+    //req.body.username;
+    const password = "d12345"
+    //req.body.password;
     var redirectTo = req.session.redirectTo;
 
     const user = await exports.checkUserCredential(account, password);
@@ -100,16 +102,18 @@ exports.updateInfo = async (req, res, next) => {
     let phonenumber = req.body.phone
     let account = req.user.username
     let address = req.body.address
-
+    let image = req.body.profileImage
+    console.log(image)
     const user = await findUser(account)
 
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
-        if (await updateInfoUser(account, fullname, address, phonenumber)) {
+        if (await updateInfoUser(account, image ,fullname, address, phonenumber)) {
             res.send(`<script>alert("Cập nhật thông tin thành công!"); window.location.href = "${req.originalUrl}"; </script>`);
         } else {
             res.send(`<script>alert("Cập nhật thông tin thất bại"); window.location.href = "${req.originalUrl}"; </script>`);
         }
     }
+    
 
 }
 
