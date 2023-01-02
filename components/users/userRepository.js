@@ -36,6 +36,7 @@ async function addUser(name, account, password, phone_number) {
   const existUser = await findUser(account)
   if (existUser === null) {
     const userInstance = user.create({ name: name, account: account, password: password, phone_number: phone_number})
+    //const userInstance = user.create({ name: name, account: account, password: password, phone_number: phone_number, status: 0, image:image })
     console.log('User is added!')
     return true
   }
@@ -57,19 +58,25 @@ async function removeUser(account) {
     return true;
   }
 }
-async function updateInfoUser(account, name, address, phone_number) {
+async function updateInfoUser(account, image ,name, address, phone_number) {
   let sqlUpdate = 'UPDATE users SET ';
+  if(image !== ''){
+    sqlUpdate += `image = "${image}"`
+  }
   if (name !== '') {
+    if(image !== ''){
+      sqlUpdate += ', ';
+    }
     sqlUpdate += `name = "${name}"`;
   }
   if (address !== '') {
-    if (name !== '') {
+    if (name !== '' || image !== '') {
       sqlUpdate += ', ';
     }
     sqlUpdate += `address = "${address}"`;
   }
   if (phone_number !== '') {
-    if (name !== '' || address !== '') {
+    if (name !== '' || address !== '' || image !== '') {
       sqlUpdate += ', ';
     }
     sqlUpdate += `phone_number = "${phone_number}"`;
