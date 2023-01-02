@@ -1,39 +1,40 @@
 const {sellProduct,findSellProduct,addSellProduct,addProductCart,removeSellProduct,removeProductCart,getSellProductList,getShoppingCartList} = require('../../models/sellProduct.js')
 
-var sessionStorage = require('sessionstorage');
 exports.getShoppingCartList = async (req,res,next) =>{
-      const userId = req.params.userId
-   
-      const sellProductList = await getShoppingCartList(1)
-      console.log("............................")
-      console.log(sellProductList.length);
-   
-      res.render('users/shopping-cart',{sellProductList :sellProductList})
+    const userId = req.user.id
+
+    const shoppingCartList = await getShoppingCartList(userId)
+    console.log("............................")
+    console.log(shoppingCartList.length);
+    
+    res.render('users/shopping-cart',{shoppingCartList :shoppingCartList})
   }
+
 exports.addToCart = async (req,res,next) =>{
-      const productId = req.params.id
-      console.log("Product id:")
-      console.log(productId);
-      
-      await addProductCart(global.userLoginId,productId)
-      res.redirect('/menu')
+    const userId = req.user.id
+    const productId = req.params.id
+    console.log("Product id:")
+    console.log(productId);
+    await addProductCart(userId,productId)
+    res.redirect('back')
 }
 
 exports.removeOutCart = async (req,res,next) =>{
-      const productId = req.params.id
-      console.log("Product ID:")
-      console.log(productId)
+    console.log("............................................")
+    const productCartId = req.params.id
+    const userId = req.user.id
+
+    console.log("Product ID:")
+    console.log(productCartId)
+    
+    if(productCartId !== undefined){
+        
+      console.log("............................................")
+      await removeProductCart(productCartId,userId);  
+      const shoppingCartList = await getShoppingCartList(userId);
+    //   res.redirect('back')
+        res.render('users/shopping-cart',{shoppingCartList :shoppingCartList})
+    }
       
-      
-      if(productId !== undefined){
-         
-          console.log("............................................")
-          await removeProductCart(productId);
-          
-          const userId = req.params.userId;     
-   
-          const sellProductList = await getShoppingCartList(1);
-          res.render('users/shopping-cart',{sellProductList :sellProductList})
-      }
       //res.render('admins/product')
   }

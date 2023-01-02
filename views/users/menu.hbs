@@ -46,7 +46,6 @@
     })
     $.each(listitems, function(idx, itm) { mylist.append(itm); }); --}}
   }
-   
  </script> 
  
 <div id="menu" class="container">
@@ -180,7 +179,7 @@
                 <span class="circle" aria-hidden="true">
                     <span class="icon arrow"></span>
                 </span>
-                <span class="button-text">Mua</span>
+                <span class="button-text">Thêm vào giỏ</span>
             </a>
           </button>
         </form>
@@ -195,21 +194,9 @@
   
   {{!-- sort-list : End --}}
   
-  {{!-- Pagination: End--}}
+
 </div>
-{{!-- -- Pagination: Start --}}
-{{!-- <nav aria-label="..." id="menu-pagination">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="/menu/previous">Previous</a>
-    </li>
-    {{#for current pages}}
-    {{/for}}
-    <li class="page-item">
-      <a class="page-link"  href="/menu/next">Next</a>
-    </li>
-  </ul>
- </nav> --}}
+  {{!-- Pagination: start --}}
  <nav aria-label="..." >
     <ul class="pagination pagination-centered" id="menu-pagination">
         {{#paginate pagination type="first"}}
@@ -229,3 +216,4 @@
         {{/paginate}}
     </ul>
  </nav>
+   {{!-- Pagination: end--}}

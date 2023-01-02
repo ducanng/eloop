@@ -8,14 +8,16 @@
                 <h1 class="display-5 fw-bolder">{{productName}}</h1>
                 <div class="fs-5 mb-5">
                     <span>{{price}}đ</span>
-                    <button class="learn-more">
-                        <a href="#">
-                            <span class="circle" aria-hidden="true">
-                                <span class="icon arrow"></span>
-                            </span>
-                            <span class="button-text">Mua</span>
-                        </a>
-                    </button>
+                    <form action="/shopping-cart/{{id}}" method="post" style="padding-top: 12px;">
+                        <button class="learn-more" >
+                            <a href="#">
+                                <span class="circle" aria-hidden="true" >
+                                    <span class="icon arrow"></span>
+                                </span>
+                                <span class="button-text">Thêm vào giỏ</span>
+                            </a>
+                        </button>
+                    </form>
                 </div>
                 <p class="lead">{{description}}</p>
             </div>
