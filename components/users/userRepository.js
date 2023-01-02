@@ -24,7 +24,7 @@ async function findUserId(account) {
 }
 async function findUserByToken(token) {
   const userInstance = await user.findOne
-    ({ where: { tokenResetPassword: token } })
+    ({ where: { token: token } })
   if (userInstance === null) {
     console.log('Not found!')
   } else {
@@ -123,7 +123,7 @@ async function updatePasswordUser(account, password) {
 }
 async function updateTokenUser(account, token) {
   const userInstance = await user.update({
-    tokenResetPassword: token
+    token: token
   },
     {
       where: {

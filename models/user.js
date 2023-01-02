@@ -48,7 +48,11 @@ const user = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  tokenResetPassword: {
+  token: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  verify: {
     type: DataTypes.STRING,
     allowNull: true,
   },
