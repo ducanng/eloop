@@ -36,7 +36,7 @@
                   </div>
 
                   <div class="row d-flex justify-content-center border-top">
-                        {{#each sellProductList}}
+                        {{#each shoppingCartList}}
                         <div class="my-auto col-6 text-right">
                               <div class="row d-flex">
                                     <div class="book">
@@ -46,7 +46,7 @@
                                     <div class="my-auto flex-column d-flex pad-left col-6" style="margin-left: 90px;">
                                           {{!-- <h6 class="mob-text" >Thinking, Fast and Slow</h6>
                                           <p class="mob-text">Daniel Kahneman</p> --}}
-                                          <a href="product/detail/{{id}}" class="product-title">
+                                          <a href="product/detail/{{products.id}}" class="product-title">
                                                 {{productName}}
                                           </a>
                                     </div>
@@ -70,7 +70,7 @@
                                           <h6 class="mob-text" style="margin-top: 0px;">{{price}}đ</h6>
                                     </div>
                                     <div class="col-4">                                   
-                                          <a href="#" class="remove_cart" rel="1" >
+                                          <a href="/shopping-cart/remove/{{sellProducts.id}}" class="remove_cart" >
                                                 <i class="fa fa-trash-o fa-2xl"></i>
                                           </a>                                                                       
                                     </div>
