@@ -6,7 +6,11 @@ const sellProduct = sequelize.define('sellProduct', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  payment: {
+  address: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  deliverytime:{
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -66,14 +70,15 @@ async function addSellProduct(userId,productId){
 async function addProductCart(userId,productId){
   //   INSERT INTO admins(id, name, account, password, createdAt, updatedAt) VALUES
 // (1, 'Letha241', 'Bolt@nowhere.com', 'gaaapjacc', '2016-01-01 00:07:13', '2017-01-01 00:00:04'),
-  payment = "not"
+  address = ""
   quantity = 1
+  deliverytime = ""
   status = 'not deli'
   if (userId === undefined){
     console.log("User hasn't logined")
     return
   }
-  const productInstance = sellProduct.create({userId: userId, productId: productId,status:status ,payment: payment, quantity: quantity})
+  const productInstance = sellProduct.create({userId: userId, productId: productId,status:status ,address: address, quantity: quantity,deliverytime:deliverytime})
   // sellProduct.update({userId:userId,productId:productId})
   
   // var normalizedDate = new Date(Date.now()).toISOString();
@@ -99,22 +104,17 @@ async function addProductCart(userId,productId){
 }
 
 async function removeSellProduct(productId,userId){
-  const [results, metadata] = await sequelize.query(`DELETE FROM sellProducts WHERE userId = "${userId}" and sellProducts.productId = ${productId}`, 
+  await sequelize.query(`DELETE FROM sellProducts WHERE userId = "${userId}" and sellProducts.productId = ${productId}`, 
   { type: sequelize.QueryTypes.DELETE
   })
-
-  console.log(results)
-  console.log(metadata)
   console.log(`REMOVE record FORM sellProducts with productId = ${productId} AND userId = ${userId}`)
 }
 
 async function removeProductCart(productCartId,userId){
-  const [results, metadata] = await sequelize.query(`DELETE FROM sellProducts WHERE userId = "${userId}" and id = "${productCartId}"`, 
+  await sequelize.query(`DELETE FROM sellProducts WHERE userId = "${userId}" and id = "${productCartId}"`, 
   { type: sequelize.QueryTypes.DELETE
   })
 
-  console.log(results)
-  console.log(metadata)
   console.log(`REMOVE record FORM sellProducts with productId = ${productCartId} AND userId = ${userId}`)
 }
 
@@ -134,11 +134,10 @@ async function getSellProductList(userId,productId){
 }
 
 async function getShoppingCartList(userId){
-  const productInstance = await sequelize.query(`SELECT price,productImageUrl,productName,products.id,sellProducts.id FROM sellProducts,products WHERE userId = "${userId}" and products.id = sellProducts.productId`, 
+  const productInstance = await sequelize.query(`SELECT price,productImageUrl,productName,products.id as productId,sellProducts.id as cartId FROM sellProducts,products WHERE userId = "${userId}" and products.id = sellProducts.productId`, 
    { type: sequelize.QueryTypes.SELECT
   });   
-  console.log(productInstance);
-   //    console.log(productInstance.length);      
+  console.log(productInstance);    
 
  if (productInstance === null){
    console.log('list empty')
@@ -147,7 +146,7 @@ async function getShoppingCartList(userId){
  }
  return productInstance
 }
-// getSellProductList(1);
+
 module.exports = {
   sellProduct,
   findSellProduct,
