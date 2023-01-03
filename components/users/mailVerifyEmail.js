@@ -1,21 +1,21 @@
 const nodemailer = require("nodemailer");
-
-exports.mailVerifyEmail = async function (url ,account, token) {
+require('dotenv').config();
+exports.mailVerifyEmail = async function (url, account, token) {
     let testAccount = await nodemailer.createTestAccount();
 
-    let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: true,
         auth: {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass, // generated ethereal password
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
         },
     });
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"Fred Foo 👻" <',
+        from: 'Eloop Verify Email <',
         to: account,
         subject: 'Xác nhận đăng ký',
         text: 'Bạn nhận được email này vì bạn (hoặc ai đó) đã đăng ký tài khoản.\n\n' +
