@@ -12,7 +12,7 @@ router.post('/signup/checkAvailability', userController.checkAvailability);
 router.get('/signin', userController.showSignIn);
 router.post('/signin', userController.signIn);
 //Logout
-router.get('/logout', userController.isLoggedIn, userController.logout);
+router.get('/logout', userController.logout);
 //Infomation
 router.get('/info', userController.isLoggedIn, userController.showInfo);
 router.post('/info', userController.isLoggedIn, userController.updateInfo);
@@ -27,4 +27,5 @@ router.post('/reset/:token', userController.resetPassword);
 router.get('/verify/:token', userController.verifyEmail);
 router.get('/verify', userController.showVerifyEmail);
 router.post('/verify', userController.sendMail);
+
 module.exports = router;

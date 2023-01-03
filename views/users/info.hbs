@@ -31,7 +31,7 @@
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
           {{!-- <img src="{{image}}" alt="Profile" class="rounded-circle"> --}}
-          <img src="{{image}}" alt="Profile" class="rounded-circle">
+          <img src="/uploads/{{image}}" alt="Profile" class="rounded-circle">
           <h2>{{name}}</h2>
         </div>
       </div>
@@ -93,36 +93,34 @@
             </div>
 
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-              <!-- Profile Edit Form -->
-              <form method="POST" action="/user/info" enctype="multipart/form-data">
-                {{!-- <div class="row mb-3">
-                  <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Hình đại diện</label>
-                  <div class="col-md-8 col-lg-9">
-                    <img src="images/D.jpg" alt="Profile">
-                    <div class="pt-2">
-                      <input type="file" class="form-control" id="profileImage">
+              {{!-- Upload Image: Start --}}
+              <div class="center">
+                <div class="dropzone">
+                  {{!-- enctype="multipart/form-data"> --}}
+                  <div class="row">
+                    <div class="col-md-4 col-lg-3 ">
+                      <label for="profileImage" class="col-form-label">Hình đại diện</label>
+                    </div>
+                    <div class="col-md-auto col-lg-auto">
+                      <form class="mt-4" action="/upload" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <input type="file" name="image" id="input-files" accept="image/*" class="form-control-file border" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
                     </div>
                   </div>
-                </div> --}}
 
-                {{!-- Upload Image: Start --}}
-                <div class="center">
-                    <div class="dropzone">
-                          
-                      {{!-- <form method="POST" action="/upload_image" enctype="multipart/form-data"> --}}
-                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Hình đại diện</label>
-                        <label class="customUpload btnUpload btnM" style="padding: 2px 2px;"> 
-                              <img src="{{image}}" class="upload-icon" />
-                              <input type="file" id="profileImage" name="profileImage" class="profileImage" value="" />
-                              
-                        </label>
-                                                                                                                            
-                      {{!-- </form> --}}
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="preview-images"></div>
                     </div>
+                  </div>
                 </div>
-                {{!-- Upload Image: End --}}
-
+              </div>
+              {{!-- Upload Image: End --}}
+              <!-- Profile Edit Form -->
+              <form method="POST" action="/user/info">
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ Tên</label>
                   <div class="col-md-8 col-lg-9">
@@ -141,7 +139,7 @@
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="phone" type="tel" class="form-control" id="Phone" value="" pattern="[0-9]{10}"
-                      title="Vui lòng nhập đúng số điện thoại" placeholder="{{phone}}" maxlength="10">
+                      title="Vui lòng nhập đúng số điện thoại" maxlength="10" placeholder="{{phone}}">
                   </div>
                 </div>
                 <div class="text-center">
@@ -267,4 +265,28 @@
       submit.disabled = true;
     }
   }
+</script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    let imagesPreview = function (input, placeToInsertImagePreview) {
+      if (input.files) {
+        let filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+          let reader = new FileReader();
+          reader.onload = function (event) {
+            $($.parseHTML("<img>"))
+              .attr("src", event.target.result)
+              .appendTo(placeToInsertImagePreview);
+          };
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    };
+    $("#input-files").on("change", function () {
+      imagesPreview(this, "div.preview-images");
+    });
+  });
 </script>
