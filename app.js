@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const handlebars = require('express-handlebars')
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
+const {updateImageUser} = require('./components/users/userRepository');
+const crypto = require('crypto');
 const hbs = require('hbs');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
@@ -22,12 +25,12 @@ const shoppingCartRouter = require('./components/payment/shoppingCartRouter');
 const { SafeString } = require('handlebars');
 
 var paginate = require('handlebars-paginate');
- 
+
 // var html = handlebars.template({pagination: {
 //   page: 3,
 //   pageCount: 10
 // }});
- 
+
 
 const app = express();
 
@@ -54,11 +57,13 @@ app.engine('.hbs', handlebars.engine({
     //   }
     //   return content;
     // },
-    paginate : (paginate) 
+    paginate: (paginate)
   },
 
-  runtimeOptions:{allowProtoPropertiesByDefault:true,
-  allowedProtoMethodsByDefault:true}
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowedProtoMethodsByDefault: true
+  }
 }));
 
 
@@ -79,19 +84,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.authenticate('session'));
 
-app.listen(port , () => {
+app.use(fileUpload());
+
+app.listen(port, () => {
   console.log("Express server listening on port http://localhost:%d in %s mode", port, app.settings.env);
 });
 //global.userLogined= true
 
 app.use(function (req, res, next) {
   res.locals.login = req.user;
-  next();}
+  next();
+}
 );
 app.use(flash());
 app.use('/', homeRouter);
 app.use('/home', homeRouter);
-app.use('/menu',productRouter);
+app.use('/menu', productRouter);
 app.use('/product', detailRouter);
 // app.use('/order', orderRouter);
 app.use('/search', searchRouter);
@@ -101,13 +109,34 @@ app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
 app.use('/shopping-cart', shoppingCartRouter);
 
+app.post('/upload', (req, res) => {
+  if (req.files === null || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ msg: 'No file uploaded' });
+  }
+  const file = req.files.image;
+  const token = crypto.randomBytes(20).toString('hex');
+  file.name = `${token}${path.extname(file.name)}`;
+  file.mv(`${__dirname}/public/uploads/${file.name}`, err => {
+      if (err) {
+          console.error(err);
+          res.render('users/info', { error: 'Cập nhật ảnh thất bại!' });
+      }
+      const account = req.user.username;
+      if (updateImageUser(account, file.name)) {
+          res.send(`<script>window.location.href = "http://localhost/user/info"; alert("Cập nhật ảnh thành công!"); </script>`);
+      } else {
+          res.send(`<script>window.location.href = "http://localhost/user/info"; alert("Cập nhật ảnh thành công!"); </script>`);
+      }
+  });
+});
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

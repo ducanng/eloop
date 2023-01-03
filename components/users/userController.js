@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
+
 const { user } = require("../../models/user.js")
 const sendForgotPassword = require('./mailForgotPassword.js')
 const sendVerifyMail = require('./mailVerifyEmail')
 const sessionStorage = require('sessionstorage')
 const { findUser, addUser, updateInfoUser, updatePasswordUser
-    , updateTokenUser, findUserByToken, updateVerifyUser } = require('./userRepository.js')
+    , updateTokenUser, findUserByToken, updateVerifyUser, updateImageUser } = require('./userRepository.js')
 exports.showSignUp = (req, res, next) => {
     res.render('features/signup');
 }
@@ -51,14 +51,18 @@ exports.showSignIn = (req, res, next) => {
     res.render('features/signin');
 }
 exports.signIn = async (req, res, next) => {
-    const account = "dtest123@gmail.com";
+    const account = "ducan172002@gmail.com";
     //req.body.username;
-    const password = "d12345"
+    const password = "123456"
     //req.body.password;
     var redirectTo = req.session.redirectTo;
 
     const user = await exports.checkUserCredential(account, password);
     if (user) {
+        if (user.status === 'ban') {
+            res.render('features/signin', { error: 'Tài khoản của bạn đã bị khóa! Hãy liên hệ qua hotline để giải quyết' });
+            return;
+        }
         sessionStorage.setItem('full_user', user);
         console.log('User is exist!' + req);
         req.login(user, function (err) {
@@ -78,7 +82,7 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         if (req.user.verify === 'done') {
             return next();
-        } 
+        }
         if (req.user.verify === 'not') {
             res.redirect('/user/verify');
         }
@@ -107,22 +111,21 @@ exports.showInfo = async (req, res, next) => {
     res.render('users/info', { user: user });
 }
 exports.updateInfo = async (req, res, next) => {
-    let fullname = req.body.name
-    let phonenumber = req.body.phone
-    let account = req.user.username
-    let address = req.body.address
-    let image = req.body.profileImage
-    console.log(image)
+    const fullname = req.body.name
+    const phonenumber = req.body.phone
+    const account = req.user.username
+    const address = req.body.address
+    console.log('fullname: ' + fullname);
     const user = await findUser(account)
 
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
-        if (await updateInfoUser(account, image ,fullname, address, phonenumber)) {
-            res.send(`<script>alert("Cập nhật thông tin thành công!"); window.location.href = "${req.originalUrl}"; </script>`);
+        if (await updateInfoUser(account, fullname, address, phonenumber)) {
+            res.send(`<script>window.location.href = "${req.originalUrl}"; alert("Cập nhật thông tin thành công!"); </script>`);
         } else {
-            res.send(`<script>alert("Cập nhật thông tin thất bại"); window.location.href = "${req.originalUrl}"; </script>`);
+            res.send(`<script>window.location.href = "${req.originalUrl}"; alert("Cập nhật thông tin thất bại"); </script>`);
         }
     }
-    
+
 
 }
 
@@ -247,7 +250,7 @@ exports.resetPassword = async (req, res, next) => {
 }
 
 exports.showVerifyEmail = async (req, res, next) => {
-    res.render('features/verifyemail', {mess : 'Chào mừng!'});
+    res.render('features/verifyemail', { mess: 'Chào mừng!' });
 }
 exports.sendMail = async (req, res, next) => {
     let account = req.user.username;
@@ -281,6 +284,7 @@ exports.verifyEmail = async (req, res, next) => {
     const user = await findUserByToken(token)
     if (user) {
         if (await updateVerifyUser(user.account, 'done')) {
+            await updateTokenUser(user.account, null);
             res.render('features/verifyemail', { mess: 'Xác thực tài khoản thành công!' });
         } else {
             res.render('features/verifyemail', { mess: 'Xác thực tài khoản thất bại!' });
@@ -289,3 +293,4 @@ exports.verifyEmail = async (req, res, next) => {
         res.render('features/verifyemail', { mess: 'Đường dẫn không đúng!' });
     }
 }
+
