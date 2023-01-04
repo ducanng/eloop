@@ -26,12 +26,7 @@ const authGGRouter = require('./components/authGG/authGGRouter');
 const { SafeString } = require('handlebars');
 
 var paginate = require('handlebars-paginate');
-
-// var html = handlebars.template({pagination: {
-//   page: 3,
-//   pageCount: 10
-// }});
-
+ 
 
 const app = express();
 

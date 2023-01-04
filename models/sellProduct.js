@@ -70,27 +70,28 @@ async function addSellProduct(userId,productId){
 async function addProductCart(userId,productId){
   //   INSERT INTO admins(id, name, account, password, createdAt, updatedAt) VALUES
 // (1, 'Letha241', 'Bolt@nowhere.com', 'gaaapjacc', '2016-01-01 00:07:13', '2017-01-01 00:00:04'),
-  address = ""
-  quantity = 1
-  deliverytime = ""
-  status = 'not deli'
+  let quantity = 1
+  let status = 'not deli'
+  let address = ''
+  let deliverytime =''
   if (userId === undefined){
     console.log("User hasn't logined")
     return
   }
-  const productInstance = sellProduct.create({userId: userId, productId: productId,status:status ,address: address, quantity: quantity,deliverytime:deliverytime})
-  // sellProduct.update({userId:userId,productId:productId})
+  function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
+  let id = getRndInteger(40000,100000000)
+  let idbk = id
+  // const productInstance = sellProduct.create({userId: userId, productId: productId,status:status , quantity: quantity,})
+  // // sellProduct.update({userId:userId,productId:productId})
   
-  // var normalizedDate = new Date(Date.now()).toISOString();
-  // await sellProduct.sequelize.query(
-  //   `INSERT INTO sellProducts( createdAt,updatedAt,productId, userId) VALUE (${normalizedDate},${normalizedDate},${userId},${productId})`,
-  //   {
-  //    type: sequelize.QueryTypes.INSERT,
-  //   },
-  // //  );
-  // const [results, metadata] = await sequelize.query(`DELETE FROM sellProducts WHERE userId = "${userId}" and sellProducts.productId = ${productId}`, 
-  // { type: sequelize.QueryTypes.DELETE
-  // })
+  const productInstance= await sequelize.query(
+      `INSERT INTO sellProducts( productId, userId,status,quantity,address,deliverytime,id,idbk) 
+      VALUES (${productId},${userId},'${status}',${quantity},'${address}','${deliverytime}',${id},${idbk})`,
+      {
+       type: sequelize.QueryTypes.INSERT,
+      })
 
   // console.log(results)
   // console.log(metadata)
