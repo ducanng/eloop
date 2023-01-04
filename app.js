@@ -22,6 +22,7 @@ const charityRouter = require('./components/charities/charityRouter');
 const userRouter = require('./components/users/userRouter');
 const searchRouter = require('./components/searchs/searchRouter');
 const shoppingCartRouter = require('./components/payment/shoppingCartRouter');
+const authGGRouter = require('./components/authGG/authGGRouter');
 const { SafeString } = require('handlebars');
 
 var paginate = require('handlebars-paginate');
@@ -108,7 +109,7 @@ app.use('/feedback', feedbackRouter);
 app.use('/recycle', recycleRouter);
 app.use('/charity', charityRouter);
 app.use('/shopping-cart', shoppingCartRouter);
-
+app.use('/auth', authGGRouter);
 app.post('/upload', (req, res) => {
   if (req.files === null || Object.keys(req.files).length === 0) {
       return res.status(400).json({ msg: 'No file uploaded' });

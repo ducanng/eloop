@@ -8,10 +8,11 @@
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
                         <h1 class="fs-4 card-title fw-bold mb-4 text-success">ĐĂNG NHẬP</h1>
-                        <form  method="POST" action="/user/signin" class="needs-validation" novalidate="" autocomplete="off">
+                        <form class="mb-3" method="POST" action="/user/signin" class="needs-validation" novalidate=""
+                            autocomplete="off">
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="username">E-Mail</label>
-                                <input id="username" type="email" class="form-control" name="username" value=""  required
+                                <input id="username" type="email" class="form-control" name="username" value="" required
                                     autofocus>
                                 <div class="invalid-feedback">
                                     Vui lòng nhập email
@@ -37,7 +38,16 @@
                                 </button>
                             </div>
                         </form>
+                        <div class="text-center">
+                            <a class="hollow btn btn-success" href="/auth/google">
+                                <img width="30px" style="margin-bottom:3px; margin-right:5px" alt="Google login"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                Sign in with Google
+                            </a>
+                        </div>
                     </div>
+
+
                     <div class="card-footer py-3 border-0">
                         <div class="text-center">
                             Bạn chưa có tài khoản? <a href="/user/signup" class="text-dark">Đăng ký</a>
