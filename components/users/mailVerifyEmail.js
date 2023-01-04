@@ -20,7 +20,7 @@ exports.mailVerifyEmail = async function (url, account, token) {
         subject: 'Xác nhận đăng ký',
         text: 'Bạn nhận được email này vì bạn (hoặc ai đó) đã đăng ký tài khoản.\n\n' +
             'Vui lòng nhấp vào liên kết sau hoặc dán liên kết này vào trình duyệt của bạn để hoàn tất quá trình đăng ký:\n\n' +
-            'http://' + url + '/user/verify/' + token + '\n\n' +
+            url + '/user/verify/' + token + '\n\n' +
             'Nếu bạn không đăng ký tài khoản, vui lòng bỏ qua email này và tài khoản của bạn sẽ không bị thay đổi.\n'
     });
 

@@ -117,7 +117,7 @@ exports.updateInfo = async (req, res, next) => {
     const address = req.body.address
     console.log('fullname: ' + fullname);
     const user = await findUser(account)
-
+    
     if (fullname !== user.name || phonenumber !== user.phone_number || address !== user.address) {
         if (await updateInfoUser(account, fullname, address, phonenumber)) {
             res.send(`<script>window.location.href = "${req.originalUrl}"; alert("Cập nhật thông tin thành công!"); </script>`);
@@ -192,7 +192,8 @@ exports.forgotPassword = async (req, res, next) => {
         console.log("Token: " + token);
         console.log("Account: " + account);
         if (await updateTokenUser(account, token)) {
-            await sendForgotPassword.mailForgotPassword(req.headers.host, account, token);
+            const url = req.protocol + req.headers.host;
+            await sendForgotPassword.mailForgotPassword(url, account, token);
             res.render('features/forgotpass', { success: 'Vui lòng kiểm tra email để đổi mật khẩu!' });
         } else {
             res.render('features/forgotpass', { error: 'Đổi mật khẩu thất bại!' });
@@ -266,7 +267,8 @@ exports.sendMail = async (req, res, next) => {
             console.log("Token: " + token);
             console.log("Account: " + account);
             if (await updateTokenUser(account, token)) {
-                await sendVerifyMail.mailVerifyEmail(req.headers.host, account, token);
+                const url = req.protocol + req.headers.host;
+                await sendVerifyMail.mailVerifyEmail(url, account, token);
                 res.render('features/verifyemail', { mess: 'Vui lòng kiểm tra email để xác thực tài khoản!' });
             } else {
                 res.render('features/verifyemail', { mess: 'Xác thực tài khoản thất bại!' });

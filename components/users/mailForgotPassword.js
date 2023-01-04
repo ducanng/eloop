@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 require('dotenv').config();
-exports.mailForgotPassword = async function (host, email, token) {
+exports.mailForgotPassword = async function (url, email, token) {
     let testAccount = await nodemailer.createTestAccount();
 
     const transporter = nodemailer.createTransport({
@@ -20,7 +20,7 @@ exports.mailForgotPassword = async function (host, email, token) {
         subject: 'Đổi mật khẩu',
         text: 'Bạn nhận được email này vì bạn (hoặc ai đó) đã yêu cầu đổi mật khẩu cho tài khoản của bạn.\n\n' +
             'Vui lòng nhấp vào liên kết sau hoặc dán liên kết này vào trình duyệt của bạn để hoàn tất quá trình đổi mật khẩu:\n\n' +
-            'http://' + host + '/user/reset/' + token + '\n\n' +
+            url + '/user/reset/' + token + '\n\n' +
             'Nếu bạn không yêu cầu đổi mật khẩu, vui lòng bỏ qua email này và mật khẩu của bạn sẽ không thay đổi.\n'
     });
 

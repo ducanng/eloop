@@ -123,10 +123,11 @@ app.post('/upload', (req, res) => {
           res.render('users/info', { error: 'Cập nhật ảnh thất bại!' });
       }
       const account = req.user.username;
+      const url = req.protocol + req.headers.host;
       if (updateImageUser(account, file.name)) {
-          res.send(`<script>window.location.href = "http://localhost/user/info"; alert("Cập nhật ảnh thành công!"); </script>`);
+          res.send(`<script>window.location.href = "${url}/user/info"; alert("Cập nhật ảnh thành công!"); </script>`);
       } else {
-          res.send(`<script>window.location.href = "http://localhost/user/info"; alert("Cập nhật ảnh thành công!"); </script>`);
+          res.send(`<script>window.location.href = "${url}/user/info"; alert("Cập nhật ảnh thất bại!"); </script>`);
       }
   });
 });
