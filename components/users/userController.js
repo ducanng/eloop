@@ -51,10 +51,8 @@ exports.showSignIn = (req, res, next) => {
     res.render('features/signin');
 }
 exports.signIn = async (req, res, next) => {
-    const account = "ducan172002@gmail.com";
-    //req.body.username;
-    const password = "123456"
-    //req.body.password;
+    const account = req.body.username;
+    const password = req.body.password;
     var redirectTo = req.session.redirectTo;
 
     const user = await exports.checkUserCredential(account, password);
