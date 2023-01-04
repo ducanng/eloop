@@ -19,6 +19,7 @@ const user = sequelize.define('user', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+    defaultValue: 'google',
   },
   address: {
     type: DataTypes.STRING,
@@ -43,6 +44,7 @@ const user = sequelize.define('user', {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
+    defaultValue: 'unban',
   },
   image: {
     type: DataTypes.STRING,
