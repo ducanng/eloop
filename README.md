@@ -4,15 +4,15 @@
 - ## Visit website: [https://eloop-user-hda.herokuapp.com/](https://eloop-user-hda.herokuapp.com/)
  
 - ## ⌨️ Technology used in the project
- - ### **Back-end, Database**
-    - NodeJS (ExpressJS).
-    - Hosting: Heroku server
-    - Cloud Server: ClearDB Mysql.
-  - ### **Front-end**
-    - Boostrap
-    - Xây dựng UI với Css, Scss.
-  - ### **Tool Team Work**
-    - Git, Github.
+  - ### **Back-end, Database**
+     - NodeJS (ExpressJS).
+     - Hosting: Heroku server
+     - Cloud Server: ClearDB Mysql.
+   - ### **Front-end**
+     - Boostrap
+     - Xây dựng UI với Css, Scss.
+   - ### **Tool Team Work**
+     - Git, Github.
 
 - ## 📦 Installation
   ```
