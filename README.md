@@ -1,7 +1,8 @@
 # <p align="center"><img src="https://eloop-user-hda.herokuapp.com/images/logo.png" height="20%" width="20%"/></p> 
-- ## eloop is a website that sells organic products
-- ## ✨ Features
+- ## website selling organic products
 
+- ## Visit website: [https://eloop-user-hda.herokuapp.com/](https://eloop-user-hda.herokuapp.com/)
+ 
 - ## ⌨️ Technology used in the project
  - ### **Back-end, Database**
     - NodeJS (ExpressJS).
