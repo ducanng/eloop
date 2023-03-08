@@ -2,15 +2,14 @@
 - ## website selling organic products
 
 - ## Visit website: [https://eloop-user-hda.herokuapp.com/](https://eloop-user-hda.herokuapp.com/)
- 
 - ## ⌨️ Technology used in the project
   - ### **Back-end, Database**
      - NodeJS (ExpressJS).
-     - Hosting: Heroku server
+     - Hosting: Heroku server.
      - Cloud Server: ClearDB Mysql.
    - ### **Front-end**
-     - Boostrap
-     - Xây dựng UI với Css, Scss.
+     - Boostrap.
+     - Scss.
    - ### **Tool Team Work**
      - Git, Github.
 
